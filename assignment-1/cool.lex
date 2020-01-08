@@ -66,7 +66,14 @@ import java_cup.runtime.Symbol;
     return new Symbol(TokenConstants.EOF);
 %eofval}
 
+/*
+ * Name of the lexer class.
+ */
 %class CoolLexer
+
+/*
+ * Turn on Java CUP compatibility.
+ */
 %cup
 
 %%
