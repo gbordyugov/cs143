@@ -69,6 +69,7 @@ import java_cup.runtime.Symbol;
 %class CoolLexer
 %cup
 
+DIGIT = [0-9]
 %%
 
 <YYINITIAL>"=>"			{ /* Sample lexical rule for "=>" arrow.
