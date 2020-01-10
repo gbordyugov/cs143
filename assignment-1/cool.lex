@@ -70,12 +70,20 @@ import java_cup.runtime.Symbol;
 %cup
 
 DIGIT = [0-9]
+MULT = \*
 %%
 
-<YYINITIAL>"=>"			{ /* Sample lexical rule for "=>" arrow.
-                                     Further lexical rules should be defined
-                                     here, after the last %% separator */
-                                  return new Symbol(TokenConstants.DARROW); }
+<YYINITIAL>"=>" {
+  /* Sample lexical rule for "=>" arrow.
+     Further lexical rules should be defined
+     here, after the last %% separator
+  */
+  return new Symbol(TokenConstants.DARROW);
+}
+
+{MULT} {
+  return new Symbol(TokenConstants.MULT);
+}
 
 .                               { /* This rule should be the very last
                                      in your lexical specification and
