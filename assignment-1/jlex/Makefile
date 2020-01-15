@@ -1,10 +1,16 @@
-all: sample
+pall: sample.lex.java
 
 JLex/Main.class: JLex/Main.java
 	javac JLex/Main.java
 
-sample: JLex/Main.class
-	java -classpath . JLex.Main example.lex
+sample.lex.java: JLex/Main.class
+	java -classpath . JLex.Main sample.lex
+
+Sample.class: sample.lex.java
+	javac -d . sample.lex.java
+
+run_sample: Sample.class
+	java Sample
 
 clean:
-	rm -rf JLex/*.class example.lex.java
+	rm -rf JLex/*.class sample.lex.java *.class
