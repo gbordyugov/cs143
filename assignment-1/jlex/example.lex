@@ -10,7 +10,7 @@ class Sample {
 }
 
 class Utility {
-  public static void assert
+  public static void ASSERT
     (
      boolean expr
      )
@@ -120,7 +120,7 @@ COMMENT_TEXT=([^/*\n]|[^*\n]"/"[^*\n]|[^/\n]"*"[^/\n]|"*"[^/\n]|"/"[^*\n])*
 <COMMENT> "/*" { comment_count = comment_count + 1; }
 <COMMENT> "*/" {
 	comment_count = comment_count - 1;
-	Utility.assert(comment_count >= 0);
+	Utility.ASSERT(comment_count >= 0);
 	if (comment_count == 0) {
     		yybegin(YYINITIAL);
 	}
@@ -130,14 +130,14 @@ COMMENT_TEXT=([^/*\n]|[^*\n]"/"[^*\n]|[^/\n]"*"[^/\n]|"*"[^/\n]|"/"[^*\n])*
 <YYINITIAL> \"{STRING_TEXT}\" {
 	String str =  yytext().substring(1,yytext().length() - 1);
 
-	Utility.assert(str.length() == yytext().length() - 2);
+	Utility.ASSERT(str.length() == yytext().length() - 2);
 	return (new Yytoken(40,str,yyline,yychar,yychar + str.length()));
 }
 <YYINITIAL> \"{STRING_TEXT} {
 	String str =  yytext().substring(1,yytext().length());
 
 	Utility.error(Utility.E_UNCLOSEDSTR);
-	Utility.assert(str.length() == yytext().length() - 1);
+	Utility.ASSERT(str.length() == yytext().length() - 1);
 	return (new Yytoken(41,str,yyline,yychar,yychar + str.length()));
 }
 <YYINITIAL> {DIGIT}+ {
