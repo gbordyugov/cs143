@@ -3,8 +3,11 @@ all: lexer
 Main.class: Main.java
 	javac Main.java
 
-sample: Main.class
+JLex:
+	ln -s . JLex
+
+sample: Main.class JLex
 	java -classpath . JLex.Main example.lex
 
 clean:
-	rm -rf *.class
+	rm -rf *.class JLex
