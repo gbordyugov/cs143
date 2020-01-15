@@ -10,10 +10,7 @@ class Sample {
 }
 
 class Utility {
-  public static void ASSERT
-    (
-     boolean expr
-     )
+  public static void ASSERT (boolean expr)
       {
 	if (false == expr) {
 	  throw (new Error("Error: Assertion failed."));
@@ -32,10 +29,7 @@ class Utility {
   public static final int E_UNCLOSEDSTR = 2;
   public static final int E_UNMATCHED = 3;
 
-  public static void error
-    (
-     int code
-     )
+  public static void error (int code)
       {
 	System.out.println(errorMsg[code]);
       }

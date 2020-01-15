@@ -3,7 +3,7 @@ pall: sample.lex.java
 JLex/Main.class: JLex/Main.java
 	javac JLex/Main.java
 
-sample.lex.java: JLex/Main.class
+sample.lex.java: JLex/Main.class sample.lex
 	java -classpath . JLex.Main sample.lex
 
 Sample.class: sample.lex.java
