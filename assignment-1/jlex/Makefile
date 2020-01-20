@@ -1,4 +1,4 @@
-pall: sample.lex.java
+all: run_sample
 
 JLex/Main.class: JLex/Main.java
 	javac JLex/Main.java
