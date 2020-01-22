@@ -41,5 +41,5 @@ It is a sequence of
 - `/`, followed by anything but a `*` or a newline.
 
 JLex-style regexes use double-quotes `"..."` to represent the literal
-meaning of the quotation body, so `"*"` represent the start itself and
-`"/"` represent the slash itself.
+meaning of the quotation body, so `"*"` represent the star `*` itself
+and `"/"` represent the slash `/`.
