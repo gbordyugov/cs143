@@ -34,5 +34,5 @@ It is a sequence of
 - anything but `/*` or a new line, or
 - anything but `*` or a new line, followed by `/`, followed by
   anything but `/` or newline, or
-- `"*"`, followed by anything but a `/` or a newline, or
+- `*`, followed by anything but a `/` or a newline, or
 - `/`, followed by anything but a `*` or a newline.
