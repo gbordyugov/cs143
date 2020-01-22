@@ -1,5 +1,8 @@
 # My notes to the sample JLex lexer
 
+[Here](https://www.cs.princeton.edu/~appel/modern/java/JLex/current/manual.html)
+one can find the official JLex manual.
+
 ## Pre-defined regexes
 
 ### The straight-forward ones
@@ -36,3 +39,7 @@ It is a sequence of
   anything but `/` or newline, or
 - `*`, followed by anything but a `/` or a newline, or
 - `/`, followed by anything but a `*` or a newline.
+
+JLex-style regexes use double-quotes `"..."` to represent the literal
+meaning of the quotation body, so `"*"` represent the start itself and
+`"/"` represent the slash itself.
