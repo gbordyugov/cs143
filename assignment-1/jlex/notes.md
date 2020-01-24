@@ -17,8 +17,10 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
 ### String text
 
 ```
-STRING_TEXT=(\\\"|[^\n\"]|\\{WHITE_SPACE_CHAR}+\\)*
+STRING_TEXT=(\\\"|[^\n\"] | \\{WHITE_SPACE_CHAR}+\\)*
 ```
+
+Note that I added extra spaces around the choice dashe `|`.
 
 The content of a string can be
 
