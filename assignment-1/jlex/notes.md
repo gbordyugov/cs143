@@ -29,8 +29,10 @@ The content of a string can be
 ### Comment text
 
 ```
-COMMENT_TEXT=([^/*\n]|[^*\n]"/"[^*\n]|[^/\n]"*"[^/\n]|"*"[^/\n]|"/"[^*\n])*
+COMMENT_TEXT=([^/*\n] | [^*\n]"/"[^*\n] | [^/\n]"*"[^/\n] | "*"[^/\n] | "/"[^*\n])*
 ```
+
+Note that I added extra spaces around the choice dashes `|`.
 
 It is a sequence of
 
