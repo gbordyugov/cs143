@@ -38,8 +38,8 @@ Note that I added extra spaces around the choice dashes `|`.
 
 It is a sequence of
 
-- anything but a slash `/`, or a start `*`, or a new line, or
-- a slash `/`, surrounded by anything but a start `*` or a newline,
+- anything but a slash `/`, or a star `*`, or a new line, or
+- a slash `/`, surrounded by anything but a star `*` or a newline,
 - a star  `*`, surrounded by anything but a slash `/` or a newline,
 - a star `*`, followed by anything but a slash `/` or a newline,
 - a slash `/`, followed by anything but a star `*` or a newline.
