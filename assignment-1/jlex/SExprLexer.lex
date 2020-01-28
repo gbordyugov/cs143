@@ -39,14 +39,26 @@ interface SExprToken {
 
 
 class SExprNumber implements SExprToken {
+    private double value;
+    SExprNumber(double v) {
+        value = v;
+    }
 }
 
 
 class SExprSymbol implements SExprToken {
+    private String value;
+    SExprSymbol(String v) {
+        value = v;
+    }
 }
 
 
 class SExprString implements SExprToken {
+    private String value;
+    SExprString(String v) {
+        value = v;
+    }
 }
 
 class Yytoken {
