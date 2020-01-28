@@ -35,33 +35,53 @@ class Utility {
 
 
 interface SExprToken {
+    public String toString();
 }
 
 
 class SExprQuote implements SExprToken {
+    public String toString() {
+        return "SExprQuote";
+    }
 }
 
 
 class SExprOpeningParen implements SExprToken {
+    public String toString() {
+        return "SExprOpeningParen";
+    }
 }
 
 
 class SExprClosingParen implements SExprToken {
+    public String toString() {
+        return "SExprClosingParen";
+    }
 }
 
 
 class SExprNumber implements SExprToken {
     private double value;
+
     SExprNumber(double v) {
         value = v;
+    }
+
+    public String toString() {
+        return "SExprNumber(" + value + ")";
     }
 }
 
 
 class SExprSymbol implements SExprToken {
     private String value;
+
     SExprSymbol(String v) {
         value = v;
+    }
+
+    public String toString() {
+        return "SExprSymbol(" + value + ")";
     }
 }
 
@@ -70,6 +90,10 @@ class SExprString implements SExprToken {
     private String value;
     SExprString(String v) {
         value = v;
+    }
+
+    public String toString() {
+        return "SExprString(" + value + ")";
     }
 }
 
@@ -84,6 +108,7 @@ class SExprString implements SExprToken {
 %type SExprToken
 
 ALPHA=[A-Za-z]
+SYMBOL_CHAR=[A-Za-z-]
 DIGIT=[0-9]
 NONNEWLINE_WHITE_SPACE_CHAR=[\ \t\b\012]
 WHITE_SPACE_CHAR=[\n\ \t\b\012]
@@ -93,7 +118,11 @@ COMMENT_TEXT=([^/*\n]|[^*\n]"/"[^*\n]|[^/\n]"*"[^/\n]|"*"[^/\n]|"/"[^*\n])*
 
 %%
 
+<YYINITIAL> {SYMBOL_CHAR}* { return (new SExprSymbol(yytext())); }
+<YYINITIAL> \"{STRING_TEXT}\" { return (new SExprString(yytext())); }
 <YYINITIAL> "(" { return (new SExprOpeningParen()); }
+<YYINITIAL> ")" { return (new SExprClosingParen()); }
+<YYINITIAL> "'" { return (new SExprQuote()); }
 
 <YYINITIAL,COMMENT> \n { }
 
