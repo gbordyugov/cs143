@@ -33,6 +33,22 @@ class Utility {
     }
 }
 
+
+interface SExprToken {
+}
+
+
+class SExprNumber implements SExprToken {
+}
+
+
+class SExprSymbol implements SExprToken {
+}
+
+
+class SExprString implements SExprToken {
+}
+
 class Yytoken {
     Yytoken (int index, String text, int line, int charBegin, int charEnd) {
         m_index = index;
