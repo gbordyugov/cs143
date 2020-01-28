@@ -1,6 +1,6 @@
 import java.lang.System;
 
-class SExpr {
+class SExprLexer {
     public static void main(String argv[]) throws java.io.IOException {
         Yylex yy = new Yylex(System.in);
         Yytoken t;

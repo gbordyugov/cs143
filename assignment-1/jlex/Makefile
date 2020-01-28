@@ -12,14 +12,14 @@ Sample.class: sample.lex.java
 run_sample: Sample.class
 	java Sample
 
-SExpr.lex.java: JLex/Main.class SExpr.lex
-	java -classpath . JLex.Main SExpr.lex
+SExprLexer.lex.java: JLex/Main.class SExprLexer.lex
+	java -classpath . JLex.Main SExprLexer.lex
 
-SExpr.class: SExpr.lex.java
-	javac -d . SExpr.lex.java
+SExprLexer.class: SExprLexer.lex.java
+	javac -d . SExprLexer.lex.java
 
-run_s_expr: SExpr.class
-	java SExpr
+run_s_expr: SExprLexer.class
+	java SExprLexer
 
 clean:
-	rm -rf JLex/*.class sample.lex.java SExpr.lex.java *.class
+	rm -rf JLex/*.class sample.lex.java SExprLexer.lex.java *.class
