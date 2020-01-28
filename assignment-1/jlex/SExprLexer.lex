@@ -38,6 +38,14 @@ interface SExprToken {
 }
 
 
+class SExprOpeningParen implements SExprToken {
+}
+
+
+class SExprClosingParen implements SExprToken {
+}
+
+
 class SExprNumber implements SExprToken {
     private double value;
     SExprNumber(double v) {
@@ -100,4 +108,4 @@ COMMENT_TEXT=([^/*\n]|[^*\n]"/"[^*\n]|[^/\n]"*"[^/\n]|"*"[^/\n]|"/"[^*\n])*
 
 %%
 
-<YYINITIAL> "," { return (new Yytoken(0,yytext(),yyline,yychar,yychar+1)); }
+<YYINITIAL> "(" { return (new SExprOpeningParen()); }
