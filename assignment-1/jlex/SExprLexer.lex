@@ -38,6 +38,10 @@ interface SExprToken {
 }
 
 
+class SExprQuote implements SExprToken {
+}
+
+
 class SExprOpeningParen implements SExprToken {
 }
 
@@ -110,3 +114,8 @@ COMMENT_TEXT=([^/*\n]|[^*\n]"/"[^*\n]|[^/\n]"*"[^/\n]|"*"[^/\n]|"/"[^*\n])*
 %%
 
 <YYINITIAL> "(" { return (new SExprOpeningParen()); }
+
+<YYINITIAL,COMMENT> . {
+        System.out.println("Illegal character: <" + yytext() + ">");
+	Utility.error(Utility.E_UNMATCHED);
+}
