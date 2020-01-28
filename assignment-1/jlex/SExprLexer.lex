@@ -104,7 +104,7 @@ class SExprString implements SExprToken {
 %}
 %line
 %char
-%state COMMENT
+%state COMMENT, STRING
 %type SExprToken
 
 ALPHA=[A-Za-z]
@@ -119,14 +119,19 @@ COMMENT_TEXT=([^/*\n]|[^*\n]"/"[^*\n]|[^/\n]"*"[^/\n]|"*"[^/\n]|"/"[^*\n])*
 %%
 
 <YYINITIAL> {SYMBOL_CHAR}* { return (new SExprSymbol(yytext())); }
-<YYINITIAL> \"{STRING_TEXT}\" { return (new SExprString(yytext())); }
+
+<YYINITIAL> \"{STRING_TEXT}\" {
+  String str = yytext().substring(1, yytext().length() - 1);
+  return (new SExprSymbol(str));
+}
+
 <YYINITIAL> "(" { return (new SExprOpeningParen()); }
 <YYINITIAL> ")" { return (new SExprClosingParen()); }
 <YYINITIAL> "'" { return (new SExprQuote()); }
 
 <YYINITIAL,COMMENT> \n { }
 
-<YYINITIAL,COMMENT> . {
+<YYINITIAL,COMMENT,STRING> . {
         System.out.println("Illegal character: <" + yytext() + ">");
 	Utility.error(Utility.E_UNMATCHED);
 }
