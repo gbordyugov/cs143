@@ -3,7 +3,7 @@ import java.lang.System;
 class SExprLexer {
     public static void main(String argv[]) throws java.io.IOException {
         Yylex yy = new Yylex(System.in);
-        Yytoken t;
+        SExprToken t;
         while ((t = yy.yylex()) != null)
             System.out.println(t);
     }
@@ -97,6 +97,7 @@ class Yytoken {
 %line
 %char
 %state COMMENT
+%type SExprToken
 
 ALPHA=[A-Za-z]
 DIGIT=[0-9]
