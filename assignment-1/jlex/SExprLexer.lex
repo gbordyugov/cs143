@@ -94,11 +94,11 @@ class SExprString implements SExprToken {
 %%
 
 %{
-  private int comment_count = 0;
+  // private int comment_count = 0;
 %}
 %line
 %char
-%state COMMENT, STRING
+%state COMMENT
 %type SExprToken
 
 ALPHA=[A-Za-z]
@@ -107,7 +107,7 @@ DIGIT=[0-9]
 NONNEWLINE_WHITE_SPACE_CHAR=[\ \t\b\012]
 WHITE_SPACE_CHAR=[\n\ \t\b\012]
 STRING_TEXT=(\\\"|[^\n\"]|\\{WHITE_SPACE_CHAR}+\\)*
-COMMENT_TEXT=([^/*\n]|[^*\n]"/"[^*\n]|[^/\n]"*"[^/\n]|"*"[^/\n]|"/"[^*\n])*
+COMMENT_TEXT=[^\n]*
 
 
 %%
@@ -124,9 +124,22 @@ COMMENT_TEXT=([^/*\n]|[^*\n]"/"[^*\n]|[^/\n]"*"[^/\n]|"*"[^/\n]|"/"[^*\n])*
 <YYINITIAL> ")" { return (new SExprClosingParen()); }
 <YYINITIAL> "'" { return (new SExprQuote()); }
 
-<YYINITIAL,COMMENT> \n { }
+<YYINITIAL> \n { }
 
-<YYINITIAL,COMMENT,STRING> . {
+<YYINITIAL> ";" {
+  yybegin(COMMENT);
+}
+
+<COMMENT> {COMMENT_TEXT} { }
+
+<COMMENT> \n {
+  // comment_count = comment_count - 1;
+  // assert comment_count >= 0;
+  yybegin(YYINITIAL);
+}
+
+
+<YYINITIAL,COMMENT> . {
         System.out.println("Illegal character: <" + yytext() + ">");
 	Utility.error(Utility.E_UNMATCHED);
 }
