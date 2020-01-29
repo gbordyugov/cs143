@@ -161,6 +161,6 @@ COMMENT_TEXT=[^\n]*
 }
 
 <YYINITIAL,COMMENT> . {
-        System.out.println("Illegal character: <" + yytext() + ">");
+    System.out.println("Illegal character: <" + yytext() + ">");
 	Utility.error(Utility.E_UNMATCHED);
 }
