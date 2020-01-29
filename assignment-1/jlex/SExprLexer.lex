@@ -143,7 +143,9 @@ COMMENT_TEXT=[^\n]*
 }
 
 <YYINITIAL> "(" { return (new SExprOpeningParen()); }
+
 <YYINITIAL> ")" { return (new SExprClosingParen()); }
+
 <YYINITIAL> "'" { return (new SExprQuote()); }
 
 <YYINITIAL> \n { }
@@ -157,7 +159,6 @@ COMMENT_TEXT=[^\n]*
 <COMMENT> \n {
   yybegin(YYINITIAL);
 }
-
 
 <YYINITIAL,COMMENT> . {
         System.out.println("Illegal character: <" + yytext() + ">");
