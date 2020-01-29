@@ -54,18 +54,30 @@ class SExprClosingParen implements SExprToken {
 }
 
 
-class SExprNumber implements SExprToken {
-    private double value;
+class SExprInt implements SExprToken {
+    private int value;
 
-    SExprNumber(double v) {
+    SExprInt(int v) {
         value = v;
     }
 
     public String toString() {
-        return "SExprNumber(" + value + ")";
+        return "SExprInt(" + value + ")";
     }
 }
 
+
+class SExprDouble implements SExprToken {
+    private double value;
+
+    SExprDouble(double v) {
+        value = v;
+    }
+
+    public String toString() {
+        return "SExprDouble(" + value + ")";
+    }
+}
 
 class SExprSymbol implements SExprToken {
     private String value;
@@ -102,7 +114,7 @@ class SExprString implements SExprToken {
 %type SExprToken
 
 ALPHA=[A-Za-z]
-SYMBOL_CHAR=[A-Za-z-]
+SYMBOL_CHAR=[A-Za-z+-*/_]
 DIGIT=[0-9]
 NONNEWLINE_WHITE_SPACE_CHAR=[\ \t\b\012]
 WHITE_SPACE_CHAR=[\n\ \t\b\012]
@@ -115,6 +127,14 @@ COMMENT_TEXT=[^\n]*
 <YYINITIAL> {NONNEWLINE_WHITE_SPACE_CHAR}+ { }
 
 <YYINITIAL> {SYMBOL_CHAR}* { return (new SExprSymbol(yytext())); }
+
+<YYINITIAL> [+-]?{DIGIT}*"."{DIGIT}+([eE][+-]?{DIGIT}+)? {
+  return (new SExprDouble(Double.parseDouble(yytext())));
+}
+
+<YYINITIAL> [+-]?{DIGIT}+ {
+  return (new SExprInt(Integer.parseInt(yytext())));
+}
 
 <YYINITIAL> \"{STRING_TEXT}\" {
   String str = yytext().substring(1, yytext().length() - 1);
