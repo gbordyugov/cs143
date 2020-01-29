@@ -94,7 +94,7 @@ class SExprString implements SExprToken {
 %%
 
 %{
-  // private int comment_count = 0;
+
 %}
 %line
 %char
@@ -111,6 +111,8 @@ COMMENT_TEXT=[^\n]*
 
 
 %%
+
+<YYINITIAL> {NONNEWLINE_WHITE_SPACE_CHAR}+ { }
 
 <YYINITIAL> {SYMBOL_CHAR}* { return (new SExprSymbol(yytext())); }
 
@@ -133,8 +135,6 @@ COMMENT_TEXT=[^\n]*
 <COMMENT> {COMMENT_TEXT} { }
 
 <COMMENT> \n {
-  // comment_count = comment_count - 1;
-  // assert comment_count >= 0;
   yybegin(YYINITIAL);
 }
 
