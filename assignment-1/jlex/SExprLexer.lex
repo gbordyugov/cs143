@@ -10,12 +10,6 @@ class SExprLexer {
 }
 
 class Utility {
-    public static void ASSERT (boolean expr) {
-        if (false == expr) {
-            throw (new Error("Error: Assertion failed."));
-        }
-    }
-
     private static final String errorMsg[] = {
         "Error: Unmatched end-of-comment punctuation.",
         "Error: Unmatched start-of-comment punctuation.",
@@ -122,6 +116,7 @@ COMMENT_TEXT=([^/*\n]|[^*\n]"/"[^*\n]|[^/\n]"*"[^/\n]|"*"[^/\n]|"/"[^*\n])*
 
 <YYINITIAL> \"{STRING_TEXT}\" {
   String str = yytext().substring(1, yytext().length() - 1);
+  assert str.length() == yytext().length() - 2;
   return (new SExprSymbol(str));
 }
 
