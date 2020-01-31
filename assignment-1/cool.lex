@@ -20,18 +20,19 @@ import java_cup.runtime.Symbol;
     StringBuffer string_buf = new StringBuffer();
 
     private int curr_lineno = 1;
+
     int get_curr_lineno() {
-	return curr_lineno;
+        return curr_lineno;
     }
 
     private AbstractSymbol filename;
 
     void set_filename(String fname) {
-	filename = AbstractTable.stringtable.addString(fname);
+        filename = AbstractTable.stringtable.addString(fname);
     }
 
     AbstractSymbol curr_filename() {
-	return filename;
+        return filename;
     }
 %}
 
