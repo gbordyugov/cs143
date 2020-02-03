@@ -64,6 +64,7 @@ import java_cup.runtime.Symbol;
 	   break;
 	*/
     }
+    System.out.println("end of file");
     return new Symbol(TokenConstants.EOF);
 %eofval}
 
@@ -72,6 +73,7 @@ import java_cup.runtime.Symbol;
 
 DIGIT = [0-9]
 MULT = \*
+
 %%
 
 <YYINITIAL> "=>" {
@@ -87,13 +89,14 @@ MULT = \*
 }
 
 <YYINITIAL> "\n" {
-      curr_lineno = curr_lineno + 1;
+  curr_lineno = curr_lineno + 1;
 }
 
 . {
    /* This rule should be the very last
       in your lexical specification and
       will match match everything not
-      matched by other lexical rules. */
+      matched by other lexical rules.
+   */
    System.err.println("LEXER BUG - UNMATCHED: " + yytext());
 }
