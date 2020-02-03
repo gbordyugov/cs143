@@ -86,6 +86,10 @@ MULT = \*
   return new Symbol(TokenConstants.MULT);
 }
 
+"\n" {
+      curr_lineno = curr_lineno + 1;
+}
+
 . {
    /* This rule should be the very last
       in your lexical specification and
