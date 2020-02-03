@@ -74,7 +74,7 @@ DIGIT = [0-9]
 MULT = \*
 %%
 
-<YYINITIAL>"=>" {
+<YYINITIAL> "=>" {
   /* Sample lexical rule for "=>" arrow.
      Further lexical rules should be defined
      here, after the last %% separator
@@ -82,11 +82,11 @@ MULT = \*
   return new Symbol(TokenConstants.DARROW);
 }
 
-{MULT} {
+<YYINITIAL> {MULT} {
   return new Symbol(TokenConstants.MULT);
 }
 
-"\n" {
+<YYINITIAL> "\n" {
       curr_lineno = curr_lineno + 1;
 }
 
