@@ -86,8 +86,10 @@ MULT = \*
   return new Symbol(TokenConstants.MULT);
 }
 
-.                               { /* This rule should be the very last
-                                     in your lexical specification and
-                                     will match match everything not
-                                     matched by other lexical rules. */
-                                  System.err.println("LEXER BUG - UNMATCHED: " + yytext()); }
+. {
+   /* This rule should be the very last
+      in your lexical specification and
+      will match match everything not
+      matched by other lexical rules. */
+   System.err.println("LEXER BUG - UNMATCHED: " + yytext());
+}
