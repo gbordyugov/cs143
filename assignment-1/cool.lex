@@ -29,11 +29,11 @@ import java_cup.runtime.Symbol;
   private AbstractSymbol filename;
 
   void set_filename(String fname) {
-      filename = AbstractTable.stringtable.addString(fname);
+    filename = AbstractTable.stringtable.addString(fname);
   }
 
   AbstractSymbol curr_filename() {
-      return filename;
+    return filename;
   }
 %}
 
@@ -56,7 +56,6 @@ import java_cup.runtime.Symbol;
  *  Ultimately, you should return the EOF symbol, or your lexer won't
  *  work.
  */
-
     switch(yy_lexical_state) {
     case YYINITIAL:
 	/* nothing special to do in the initial state */
@@ -90,7 +89,7 @@ MULT = \*
   return new Symbol(TokenConstants.MULT);
 }
 
-<YYINITIAL> "\n" {
+\n {
   curr_lineno = curr_lineno + 1;
 }
 
