@@ -74,20 +74,191 @@ import java_cup.runtime.Symbol;
 
 DIGIT = [0-9]
 MULT = \*
-
+STR_CONST = \"[a-zA-Z]*\"
+TYPEID = [a-zA-Z]*
+WHITE_SPACE_CHAR=[\n\ \t\b\012]
 %%
-
-<YYINITIAL> "=>" {
-  /* Sample lexical rule for "=>" arrow.
-     Further lexical rules should be defined
-     here, after the last %% separator
-  */
-  return new Symbol(TokenConstants.DARROW);
-}
 
 <YYINITIAL> {MULT} {
   return new Symbol(TokenConstants.MULT);
 }
+
+<YYINITIAL> "inherits" {
+  return new Symbol(TokenConstants.INHERITS);
+}
+
+<YYINITIAL> "pool" {
+  return new Symbol(TokenConstants.POOL);
+}
+
+<YYINITIAL> "case" {
+  return new Symbol(TokenConstants.CASE);
+}
+
+<YYINITIAL> "(" {
+  return new Symbol(TokenConstants.LPAREN);
+}
+
+<YYINITIAL> ";" {
+  return new Symbol(TokenConstants.SEMI);
+}
+
+<YYINITIAL> "-" {
+  return new Symbol(TokenConstants.MINUS);
+}
+
+<YYINITIAL> {STR_CONST} {
+  // TODO
+  return new Symbol(TokenConstants.STR_CONST);
+}
+
+<YYINITIAL> ")" {
+  return new Symbol(TokenConstants.RPAREN);
+}
+
+<YYINITIAL> "not" {
+  return new Symbol(TokenConstants.NOT);
+}
+
+<YYINITIAL> {TYPEID} {
+  // TODO
+  return new Symbol(TokenConstants.TYPEID);
+}
+
+<YYINITIAL> "<" {
+  return new Symbol(TokenConstants.LT);
+}
+
+<YYINITIAL> "in" {
+  return new Symbol(TokenConstants.IN);
+}
+
+<YYINITIAL> "," {
+  return new Symbol(TokenConstants.COMMA);
+}
+
+<YYINITIAL> "class" {
+  return new Symbol(TokenConstants.CLASS);
+}
+
+<YYINITIAL> "fi" {
+  return new Symbol(TokenConstants.FI);
+}
+
+<YYINITIAL> "/" {
+  return new Symbol(TokenConstants.DIV);
+}
+
+<YYINITIAL> "loop" {
+  return new Symbol(TokenConstants.LOOP);
+}
+
+<YYINITIAL> "+" {
+  return new Symbol(TokenConstants.PLUS);
+}
+
+<YYINITIAL> "<-" {
+  return new Symbol(TokenConstants.ASSIGN);
+}
+
+<YYINITIAL> "if" {
+  return new Symbol(TokenConstants.IF);
+}
+
+<YYINITIAL> "." {
+  return new Symbol(TokenConstants.DOT);
+}
+
+<YYINITIAL> "<=" {
+  return new Symbol(TokenConstants.LE);
+}
+
+<YYINITIAL> "of" {
+  return new Symbol(TokenConstants.OF);
+}
+
+<YYINITIAL> [1-9][0-9]* {
+  // TODO, pass the value of the constant
+  return new Symbol(TokenConstants.INT_CONST);
+}
+
+<YYINITIAL> "new" {
+  return new Symbol(TokenConstants.NEW);
+}
+
+<YYINITIAL> "isvoid" {
+  return new Symbol(TokenConstants.ISVOID);
+}
+
+<YYINITIAL> "=" {
+  return new Symbol(TokenConstants.EQ);
+}
+
+<YYINITIAL> "Error" {
+  return new Symbol(TokenConstants.ERROR);
+}
+
+<YYINITIAL> ":" {
+  return new Symbol(TokenConstants.COLON);
+}
+
+<YYINITIAL> "-" {
+  return new Symbol(TokenConstants.NEG);
+}
+
+<YYINITIAL> "{" {
+  return new Symbol(TokenConstants.LBRACE);
+}
+
+<YYINITIAL> "else" {
+  return new Symbol(TokenConstants.ELSE);
+}
+
+<YYINITIAL> "=>" {
+  return new Symbol(TokenConstants.DARROW);
+}
+
+<YYINITIAL> "while" {
+  return new Symbol(TokenConstants.WHILE);
+}
+
+<YYINITIAL> "esac" {
+  return new Symbol(TokenConstants.ESAC);
+}
+
+<YYINITIAL> "let" {
+  return new Symbol(TokenConstants.LET);
+}
+
+<YYINITIAL> "{" {
+  return new Symbol(TokenConstants.RBRACE);
+}
+
+<YYINITIAL> "let" {
+  return new Symbol(TokenConstants.LET_STMT);
+}
+
+<YYINITIAL> "then" {
+  return new Symbol(TokenConstants.THEN);
+}
+
+<YYINITIAL> "true"|"false" {
+  return new Symbol(TokenConstants.BOOL_CONST);
+}
+
+<YYINITIAL> [a-zA-Z][a-zA-Z0-9]* {
+  return new Symbol(TokenConstants.OBJECTID);
+}
+
+<YYINITIAL> "at" {
+  return new Symbol(TokenConstants.AT);
+}
+
+
+<YYINITIAL> {WHITE_SPACE_CHAR} {
+}
+
+
 
 \n {
   curr_lineno = curr_lineno + 1;
