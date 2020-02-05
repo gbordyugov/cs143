@@ -75,7 +75,8 @@ import java_cup.runtime.Symbol;
 DIGIT = [0-9]
 MULT = \*
 STR_CONST = \"[a-zA-Z]*\"
-TYPEID = [a-zA-Z]*
+TYPEID = [A-Z][a-zA-Z1-9_]*
+OBJECTID = [a-z][a-zA-Z1-9_]*
 WHITE_SPACE_CHAR=[\n\ \t\b\012]
 %%
 
@@ -83,15 +84,15 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.MULT);
 }
 
-<YYINITIAL> "inherits" {
+<YYINITIAL> [iI][nN][hH][eE][rR][iI][tT][sS] {
   return new Symbol(TokenConstants.INHERITS);
 }
 
-<YYINITIAL> "pool" {
+<YYINITIAL> [pP][oO][oO][lL] {
   return new Symbol(TokenConstants.POOL);
 }
 
-<YYINITIAL> "case" {
+<YYINITIAL> [cC][aA][sS][eE] {
   return new Symbol(TokenConstants.CASE);
 }
 
@@ -116,7 +117,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.RPAREN);
 }
 
-<YYINITIAL> "not" {
+<YYINITIAL> [nN][oO][tT] {
   return new Symbol(TokenConstants.NOT);
 }
 
@@ -129,7 +130,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.LT);
 }
 
-<YYINITIAL> "in" {
+<YYINITIAL> [iI][nN] {
   return new Symbol(TokenConstants.IN);
 }
 
@@ -137,11 +138,11 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.COMMA);
 }
 
-<YYINITIAL> "class" {
+<YYINITIAL> [cC][lL][aA][sS][sS] {
   return new Symbol(TokenConstants.CLASS);
 }
 
-<YYINITIAL> "fi" {
+<YYINITIAL> [fF][iI] {
   return new Symbol(TokenConstants.FI);
 }
 
@@ -149,7 +150,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.DIV);
 }
 
-<YYINITIAL> "loop" {
+<YYINITIAL> [lL][oO][oO][pP] {
   return new Symbol(TokenConstants.LOOP);
 }
 
@@ -161,7 +162,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.ASSIGN);
 }
 
-<YYINITIAL> "if" {
+<YYINITIAL> [iI][fF] {
   return new Symbol(TokenConstants.IF);
 }
 
@@ -182,7 +183,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.INT_CONST);
 }
 
-<YYINITIAL> "new" {
+<YYINITIAL> [nN][eE][wW] {
   return new Symbol(TokenConstants.NEW);
 }
 
@@ -210,7 +211,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.LBRACE);
 }
 
-<YYINITIAL> "else" {
+<YYINITIAL> [eE][lL][sS][eE] {
   return new Symbol(TokenConstants.ELSE);
 }
 
@@ -218,15 +219,15 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.DARROW);
 }
 
-<YYINITIAL> "while" {
+<YYINITIAL> [wW][hH][iI][lL][eE] {
   return new Symbol(TokenConstants.WHILE);
 }
 
-<YYINITIAL> "esac" {
+<YYINITIAL> [eE][sS][aA][cC] {
   return new Symbol(TokenConstants.ESAC);
 }
 
-<YYINITIAL> "let" {
+<YYINITIAL> [lL][eE][tT] {
   return new Symbol(TokenConstants.LET);
 }
 
@@ -238,7 +239,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.LET_STMT);
 }
 
-<YYINITIAL> "then" {
+<YYINITIAL> [tT][hH][eE][nN] {
   return new Symbol(TokenConstants.THEN);
 }
 
@@ -246,11 +247,11 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.BOOL_CONST);
 }
 
-<YYINITIAL> [a-zA-Z][a-zA-Z0-9]* {
+<YYINITIAL> {OBJECTID} {
   return new Symbol(TokenConstants.OBJECTID);
 }
 
-<YYINITIAL> "at" {
+<YYINITIAL> [aA][tT] {
   return new Symbol(TokenConstants.AT);
 }
 
