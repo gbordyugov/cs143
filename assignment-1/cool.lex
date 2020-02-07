@@ -238,8 +238,12 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.THEN);
 }
 
-<YYINITIAL> [tT][rR][uU][eE]|[fF][aA][lL][sS][eE] {
-  return new Symbol(TokenConstants.BOOL_CONST);
+<YYINITIAL> [fF][aA][lL][sS][eE] {
+  return new Symbol(TokenConstants.BOOL_CONST, false);
+}
+
+<YYINITIAL> [tT][rR][uU][eE] {
+  return new Symbol(TokenConstants.BOOL_CONST, true);
 }
 
 <YYINITIAL> [aA][tT] {
