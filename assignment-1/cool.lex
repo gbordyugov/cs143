@@ -169,7 +169,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.LE);
 }
 
-<YYINITIAL> "of" {
+<YYINITIAL> [oO][fF] {
   return new Symbol(TokenConstants.OF);
 }
 
@@ -182,7 +182,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.NEW);
 }
 
-<YYINITIAL> "isvoid" {
+<YYINITIAL> [iI][sS][vV][oO][iI][dD] {
   return new Symbol(TokenConstants.ISVOID);
 }
 
@@ -230,7 +230,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.RBRACE);
 }
 
-<YYINITIAL> "let" {
+<YYINITIAL> [lL][eE][tT] {
   return new Symbol(TokenConstants.LET_STMT);
 }
 
@@ -238,11 +238,11 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.THEN);
 }
 
-<YYINITIAL> [fF][aA][lL][sS][eE] {
+<YYINITIAL> f[aA][lL][sS][eE] {
   return new Symbol(TokenConstants.BOOL_CONST, false);
 }
 
-<YYINITIAL> [tT][rR][uU][eE] {
+<YYINITIAL> t[rR][uU][eE] {
   return new Symbol(TokenConstants.BOOL_CONST, true);
 }
 
