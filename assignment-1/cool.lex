@@ -121,11 +121,6 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.NOT);
 }
 
-<YYINITIAL> {TYPEID} {
-  // TODO
-  return new Symbol(TokenConstants.TYPEID);
-}
-
 <YYINITIAL> "<" {
   return new Symbol(TokenConstants.LT);
 }
@@ -243,16 +238,21 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.THEN);
 }
 
-<YYINITIAL> "true"|"false" {
+<YYINITIAL> [tT][rR][uU][eE]|[fF][aA][lL][sS][eE] {
   return new Symbol(TokenConstants.BOOL_CONST);
-}
-
-<YYINITIAL> {OBJECTID} {
-  return new Symbol(TokenConstants.OBJECTID);
 }
 
 <YYINITIAL> [aA][tT] {
   return new Symbol(TokenConstants.AT);
+}
+
+<YYINITIAL> {TYPEID} {
+  // TODO
+  return new Symbol(TokenConstants.TYPEID);
+}
+
+<YYINITIAL> {OBJECTID} {
+  return new Symbol(TokenConstants.OBJECTID);
 }
 
 
@@ -262,7 +262,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
 
 
 \n {
-  curr_lineno = curr_lineno + 1;
+  curr_lineno++;
 }
 
 . {
