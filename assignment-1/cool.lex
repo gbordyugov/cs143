@@ -248,11 +248,13 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
 
 <YYINITIAL> {TYPEID} {
   // TODO
-  return new Symbol(TokenConstants.TYPEID);
+  return new Symbol(TokenConstants.TYPEID,
+                    AbstractTable.idtable.addString(yytext()));
 }
 
 <YYINITIAL> {OBJECTID} {
-  return new Symbol(TokenConstants.OBJECTID);
+  return new Symbol(TokenConstants.OBJECTID,
+                    AbstractTable.idtable.addString(yytext()));
 }
 
 
