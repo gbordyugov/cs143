@@ -98,7 +98,8 @@ COMMENT_TEXT=([^(*\n]|"*"[^(]|"("[^*])*
 "*)" {
   comment_level--;
   if (comment_level < 0)
-    return new Symbol(TokenConstants.ERROR);
+    return new Symbol(TokenConstants.ERROR,
+                    AbstractTable.idtable.addString(yytext()));
   if (0 == comment_level)
     yybegin(YYINITIAL);
 }
