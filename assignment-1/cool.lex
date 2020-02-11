@@ -297,7 +297,12 @@ COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
 
 <DASH_COMMENT> \n {
   curr_lineno++;
-  yybegin(YYINITIAL);
+  comment_level--;
+
+  if (0 == comment_level)
+    yybegin(YYINITIAL);
+  else
+    yybegin(COMMENT);
 }
 
 <COMMENT, YYINITIAL> \n {
