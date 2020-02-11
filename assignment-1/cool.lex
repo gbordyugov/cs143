@@ -80,8 +80,7 @@ STR_CONST = \"[^\n]*\"
 TYPEID = [A-Z][a-zA-Z1-9_]*
 OBJECTID = [a-z][a-zA-Z1-9_]*
 WHITE_SPACE_CHARS=([\ \t\b\f\r\v\x0b])+
-COMMENT_TEXT=([^(*\n]|"*"[^(]|"("[^*])*
-STRING_TEXT=([^\n])*
+COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
 %%
 
 <YYINITIAL> "--" {
