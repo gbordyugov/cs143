@@ -85,6 +85,11 @@ COMMENT_TEXT=([^(*\n]|"*"[^(]|"("[^*])*
 
 %%
 
+<YYINITIAL> "--" {
+  yybegin(COMMENT);
+  comment_level++;
+}
+
 "(*" {
   yybegin(COMMENT);
   comment_level++;
