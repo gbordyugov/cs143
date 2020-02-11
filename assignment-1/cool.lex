@@ -291,6 +291,7 @@ COMMENT_TEXT=([^(*\n]|"*"[^(]|"("[^*])*
 \n {
   curr_lineno++;
   yybegin(YYINITIAL);
+  comment_level = 0;
 }
 
 . {
