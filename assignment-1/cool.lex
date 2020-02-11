@@ -63,10 +63,9 @@ import java_cup.runtime.Symbol;
 	/* nothing special to do in the initial state */
 	break;
 	/* If necessary, add code for other states here, e.g:
-	   case COMMENT:
-	   ...
-	   break;
-	*/
+       case COMMENT:
+       break;
+       */
     }
     return new Symbol(TokenConstants.EOF);
 %eofval}
@@ -298,8 +297,6 @@ STRING_TEXT=([^\n])*
 
 \n {
   curr_lineno++;
-  yybegin(YYINITIAL);
-  comment_level = 0;
 }
 
 . {
