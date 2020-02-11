@@ -80,7 +80,7 @@ MULT = \*
 STR_CONST = \"[a-zA-Z]*\"
 TYPEID = [A-Z][a-zA-Z1-9_]*
 OBJECTID = [a-z][a-zA-Z1-9_]*
-WHITE_SPACE_CHAR=[\n\ \t\b\012]
+WHITE_SPACE_CHARS=([\ \t\b\f\r\v\x0b])+
 COMMENT_TEXT=([^(*\n]|"*"[^(]|"("[^*])*
 
 %%
@@ -288,7 +288,7 @@ COMMENT_TEXT=([^(*\n]|"*"[^(]|"("[^*])*
 }
 
 
-<YYINITIAL> {WHITE_SPACE_CHAR} {
+<YYINITIAL> {WHITE_SPACE_CHARS} {
 }
 
 
