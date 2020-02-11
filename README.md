@@ -1,1 +1,1 @@
-# My take on CS143 from Stanford
+# My take on cs143 Compilers from Stanford
