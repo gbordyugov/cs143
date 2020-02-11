@@ -77,12 +77,12 @@ import java_cup.runtime.Symbol;
 
 DIGIT = [0-9]
 MULT = \*
-STR_CONST = \"[a-zA-Z]*\"
+STR_CONST = \"[^\n]*\"
 TYPEID = [A-Z][a-zA-Z1-9_]*
 OBJECTID = [a-z][a-zA-Z1-9_]*
 WHITE_SPACE_CHARS=([\ \t\b\f\r\v\x0b])+
 COMMENT_TEXT=([^(*\n]|"*"[^(]|"("[^*])*
-
+STRING_TEXT=([^\n])*
 %%
 
 <YYINITIAL> "--" {
@@ -136,8 +136,10 @@ COMMENT_TEXT=([^(*\n]|"*"[^(]|"("[^*])*
 }
 
 <YYINITIAL> {STR_CONST} {
-  // TODO
-  return new Symbol(TokenConstants.STR_CONST);
+  String str = yytext().substring(1, yytext().length() - 1);
+  assert str.length() == yytext().length() - 2;
+  return new Symbol(TokenConstants.STR_CONST,
+                    AbstractTable.idtable.addString(yytext()));
 }
 
 <YYINITIAL> ")" {
