@@ -62,6 +62,8 @@ import java_cup.runtime.Symbol;
     case YYINITIAL:
 	/* nothing special to do in the initial state */
         break;
+    case DASH_COMMENT:
+        break;
     case COMMENT:
         yybegin(YYINITIAL);
         return new Symbol(TokenConstants.ERROR, "EOF in comment");
@@ -70,7 +72,7 @@ import java_cup.runtime.Symbol;
 %eofval}
 
 %class CoolLexer
-%state COMMENT
+%state COMMENT, DASH_COMMENT
 %cup
 
 DIGIT = [0-9]
@@ -83,7 +85,7 @@ COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
 %%
 
 <YYINITIAL> "--" {
-  yybegin(COMMENT);
+  yybegin(DASH_COMMENT);
   comment_level++;
 }
 
@@ -101,7 +103,7 @@ COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
     yybegin(YYINITIAL);
 }
 
-<COMMENT> {COMMENT_TEXT} {
+<COMMENT, DASH_COMMENT> {COMMENT_TEXT} {
 }
 
 <YYINITIAL> {MULT} {
@@ -293,7 +295,12 @@ COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
 
 
 
-\n {
+<DASH_COMMENT> \n {
+  curr_lineno++;
+  yybegin(YYINITIAL);
+}
+
+<COMMENT, YYINITIAL> \n {
   curr_lineno++;
 }
 
