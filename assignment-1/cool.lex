@@ -26,6 +26,8 @@ import java_cup.runtime.Symbol;
       return curr_lineno;
   }
 
+  private int comment_level = 0;
+
   private AbstractSymbol filename;
 
   void set_filename(String fname) {
@@ -70,6 +72,7 @@ import java_cup.runtime.Symbol;
 %eofval}
 
 %class CoolLexer
+%state COMMENT
 %cup
 
 DIGIT = [0-9]
@@ -78,7 +81,28 @@ STR_CONST = \"[a-zA-Z]*\"
 TYPEID = [A-Z][a-zA-Z1-9_]*
 OBJECTID = [a-z][a-zA-Z1-9_]*
 WHITE_SPACE_CHAR=[\n\ \t\b\012]
+COMMENT_TEXT=([^(*\n])*
+
 %%
+
+"(*" {
+  System.out.println("start comment");
+  yybegin(COMMENT);
+  comment_level++;
+}
+
+"*)" {
+  System.out.println("end comment");
+  comment_level--;
+  if (comment_level < 0)
+    return new Symbol(TokenConstants.ERROR);
+  if (0 == comment_level)
+    yybegin(YYINITIAL);
+}
+
+<COMMENT> {COMMENT_TEXT} {
+  System.out.println("comment text");
+}
 
 <YYINITIAL> {MULT} {
   return new Symbol(TokenConstants.MULT);
@@ -173,9 +197,9 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
   return new Symbol(TokenConstants.OF);
 }
 
-<YYINITIAL> [1-9][0-9]* {
-  // TODO, pass the value of the constant
-  return new Symbol(TokenConstants.INT_CONST);
+<YYINITIAL> [0-9]+ {
+  return new Symbol(TokenConstants.INT_CONST,
+                    AbstractTable.idtable.addString(yytext()));
 }
 
 <YYINITIAL> [nN][eE][wW] {
@@ -269,6 +293,7 @@ WHITE_SPACE_CHAR=[\n\ \t\b\012]
 
 \n {
   curr_lineno++;
+  yybegin(YYINITIAL);
 }
 
 . {
