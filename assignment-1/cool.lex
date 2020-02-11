@@ -81,18 +81,16 @@ STR_CONST = \"[a-zA-Z]*\"
 TYPEID = [A-Z][a-zA-Z1-9_]*
 OBJECTID = [a-z][a-zA-Z1-9_]*
 WHITE_SPACE_CHAR=[\n\ \t\b\012]
-COMMENT_TEXT=([^(*\n])*
+COMMENT_TEXT=([^(*\n]|"*"[^(]|"("[^*])*
 
 %%
 
 "(*" {
-  System.out.println("start comment");
   yybegin(COMMENT);
   comment_level++;
 }
 
 "*)" {
-  System.out.println("end comment");
   comment_level--;
   if (comment_level < 0)
     return new Symbol(TokenConstants.ERROR);
@@ -101,7 +99,6 @@ COMMENT_TEXT=([^(*\n])*
 }
 
 <COMMENT> {COMMENT_TEXT} {
-  System.out.println("comment text");
 }
 
 <YYINITIAL> {MULT} {
