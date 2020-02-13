@@ -26,6 +26,8 @@ import java_cup.runtime.Symbol;
       return curr_lineno;
   }
 
+  // is used to track only (* ... *) comments,
+  // double-dash comments are not taken into account by it
   private int comment_level = 0;
 
   private AbstractSymbol filename;
