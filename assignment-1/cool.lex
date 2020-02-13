@@ -82,6 +82,7 @@ TYPEID = [A-Z][a-zA-Z1-9_]*
 OBJECTID = [a-z][a-zA-Z1-9_]*
 WHITE_SPACE_CHARS=([\ \t\b\f\r\v\x0b])+
 COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
+DASH_COMMENT_TEXT=([^\n])*
 %%
 
 <YYINITIAL> "--" {
@@ -103,7 +104,10 @@ COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
     yybegin(YYINITIAL);
 }
 
-<COMMENT, DASH_COMMENT> {COMMENT_TEXT} {
+<COMMENT> {COMMENT_TEXT} {
+}
+
+<DASH_COMMENT> {DASH_COMMENT_TEXT} {
 }
 
 <YYINITIAL> {MULT} {
