@@ -87,7 +87,6 @@ DASH_COMMENT_TEXT=([^\n])*
 
 <YYINITIAL> "--" {
   yybegin(DASH_COMMENT);
-  comment_level++;
 }
 
 "(*" {
@@ -96,12 +95,14 @@ DASH_COMMENT_TEXT=([^\n])*
 }
 
 "*)" {
-  comment_level--;
-  if (comment_level < 0)
+  if (comment_level <= 0)
     return new Symbol(TokenConstants.ERROR,
-                    AbstractTable.idtable.addString(yytext()));
-  if (0 == comment_level)
+                      AbstractTable.idtable.addString(yytext()));
+  comment_level--;
+
+  if (0 == comment_level) {
     yybegin(YYINITIAL);
+  }
 }
 
 <COMMENT> {COMMENT_TEXT} {
@@ -301,12 +302,8 @@ DASH_COMMENT_TEXT=([^\n])*
 
 <DASH_COMMENT> \n {
   curr_lineno++;
-  comment_level--;
+  yybegin(YYINITIAL);
 
-  if (0 == comment_level)
-    yybegin(YYINITIAL);
-  else
-    yybegin(COMMENT);
 }
 
 <COMMENT, YYINITIAL> \n {
