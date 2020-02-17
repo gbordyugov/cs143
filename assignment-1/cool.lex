@@ -69,12 +69,15 @@ import java_cup.runtime.Symbol;
     case COMMENT:
         yybegin(YYINITIAL);
         return new Symbol(TokenConstants.ERROR, "EOF in comment");
+    case STRING:
+        yybegin(YYINITIAL);
+        return new Symbol(TokenConstants.ERROR, "EOF in string");
     }
     return new Symbol(TokenConstants.EOF);
 %eofval}
 
 %class CoolLexer
-%state COMMENT, DASH_COMMENT
+%state COMMENT, DASH_COMMENT, STRING
 %cup
 
 DIGIT = [0-9]
@@ -85,7 +88,22 @@ OBJECTID = [a-z][a-zA-Z1-9_]*
 WHITE_SPACE_CHARS=([\ \t\b\f\r\v\x0b])+
 COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
 DASH_COMMENT_TEXT=([^\n])*
+STRING_TEXT=([^\n\"])*
 %%
+
+<YYINITIAL> \" {
+  yybegin(STRING);
+}
+
+<STRING> {STRING_TEXT} {
+  return new Symbol(TokenConstants.STR_CONST,
+                    AbstractTable.idtable.addString(yytext()));
+}
+
+<STRING> \" {
+  yybegin(YYINITIAL);
+}
+
 
 <YYINITIAL> "--" {
   yybegin(DASH_COMMENT);
@@ -139,13 +157,6 @@ DASH_COMMENT_TEXT=([^\n])*
 
 <YYINITIAL> "-" {
   return new Symbol(TokenConstants.MINUS);
-}
-
-<YYINITIAL> {STR_CONST} {
-  String str = yytext().substring(1, yytext().length() - 1);
-  assert str.length() == yytext().length() - 2;
-  return new Symbol(TokenConstants.STR_CONST,
-                    AbstractTable.idtable.addString(yytext()));
 }
 
 <YYINITIAL> ")" {
@@ -310,6 +321,12 @@ DASH_COMMENT_TEXT=([^\n])*
 
 <COMMENT, YYINITIAL> \n {
   curr_lineno++;
+}
+
+<STRING> \n {
+  curr_lineno++;
+  yybegin(YYINITIAL);
+  return new Symbol(TokenConstants.ERROR, "EOL in string");
 }
 
 . {
