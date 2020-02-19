@@ -97,7 +97,7 @@ STRING_TEXT=([^\n\"])*
 
 <STRING> {STRING_TEXT} {
   return new Symbol(TokenConstants.STR_CONST,
-                    AbstractTable.idtable.addString(yytext()));
+                    AbstractTable.stringtable.addString(yytext()));
 }
 
 <STRING> \" {
@@ -116,8 +116,8 @@ STRING_TEXT=([^\n\"])*
 
 "*)" {
   if (comment_level <= 0)
-    return new Symbol(TokenConstants.ERROR,
-                      AbstractTable.idtable.addString(yytext()));
+    return new Symbol(TokenConstants.ERROR, yytext());
+
   comment_level--;
 
   if (0 == comment_level) {
@@ -221,7 +221,7 @@ STRING_TEXT=([^\n\"])*
 
 <YYINITIAL> [0-9]+ {
   return new Symbol(TokenConstants.INT_CONST,
-                    AbstractTable.idtable.addString(yytext()));
+                    AbstractTable.inttable.addString(yytext()));
 }
 
 <YYINITIAL> [nN][eE][wW] {
