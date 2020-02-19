@@ -89,7 +89,7 @@ WHITE_SPACE_CHARS=([\ \t\b\f\r\v\x0b])+
 COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
 DASH_COMMENT_TEXT=([^\n])*
 STRING_SIMPLE_CHAR=[^\n\"\\]
-NORMAL_ESCAPED=[^\b\t\n\f]
+NORMAL_AFTER_BACKSLASH=[^btnf]
 %%
 
 <YYINITIAL> \" {
@@ -101,29 +101,29 @@ NORMAL_ESCAPED=[^\b\t\n\f]
   string_buf.append(yytext());
 }
 
-<STRING> \\\b {
+<STRING> "\b" {
   string_buf.append("\b");
 }
 
-<STRING> \\\t {
+<STRING> "\t" {
   string_buf.append("\t");
 }
 
-<STRING> \\\n {
+<STRING> "\n" {
   string_buf.append("\n");
 }
 
-<STRING> \\\f {
+<STRING> "\f" {
   string_buf.append("\f");
 }
 
-<STRING> \\\n {
+<STRING> \n {
   yybegin(YYINITIAL);
   return new Symbol(TokenConstants.ERROR, "Unescaped EOL in string");
 }
 
-<STRING> \\{NORMAL_ESCAPED} {
-  string_buf.append(yytext());
+<STRING> \\{NORMAL_AFTER_BACKSLASH} {
+  string_buf.append(yytext().substring(1));
 }
 
 <STRING> \" {
