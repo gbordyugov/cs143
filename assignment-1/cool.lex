@@ -101,19 +101,19 @@ NORMAL_ESCAPED=[^\b\t\n\f]
   string_buf.append(yytext());
 }
 
-<STRING> "\\b" {
+<STRING> \\\b {
   string_buf.append("\b");
 }
 
-<STRING> "\\t" {
+<STRING> \\\t {
   string_buf.append("\t");
 }
 
-<STRING> "\\n" {
+<STRING> \\\n {
   string_buf.append("\n");
 }
 
-<STRING> "\\f" {
+<STRING> \\\f {
   string_buf.append("\f");
 }
 
