@@ -89,7 +89,8 @@ WHITE_SPACE_CHARS=([\ \t\b\f\r\v\x0b])+
 COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
 DASH_COMMENT_TEXT=([^\n])*
 STRING_SIMPLE_CHAR=[^\n\"\\]
-NORMAL_AFTER_BACKSLASH=[^btnf]
+NORMAL_AFTER_BACKSLASH=[^btnf\x00]
+NULL_CHAR=\x00
 %%
 
 <YYINITIAL> \" {
@@ -124,6 +125,10 @@ NORMAL_AFTER_BACKSLASH=[^btnf]
 
 <STRING> \\{NORMAL_AFTER_BACKSLASH} {
   string_buf.append(yytext().substring(1));
+}
+
+<STRING> \\{NULL_CHAR} {
+  return new Symbol(TokenConstants.ERROR, "Escaped null character in string");
 }
 
 <STRING> \" {
