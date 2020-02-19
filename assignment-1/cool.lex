@@ -117,7 +117,7 @@ NORMAL_ESCAPED=[^\b\t\n\f]
   string_buf.append("\f");
 }
 
-<STRING> "\\\n" {
+<STRING> \\\n {
   yybegin(YYINITIAL);
   return new Symbol(TokenConstants.ERROR, "Unescaped EOL in string");
 }
