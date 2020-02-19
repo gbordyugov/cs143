@@ -88,20 +88,22 @@ OBJECTID = [a-z][a-zA-Z1-9_]*
 WHITE_SPACE_CHARS=([\ \t\b\f\r\v\x0b])+
 COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
 DASH_COMMENT_TEXT=([^\n])*
-STRING_TEXT=([^\n\"])*
+STRING_SIMPLE_CHAR=[^\n\"\\]
 %%
 
 <YYINITIAL> \" {
+  string_buf = new StringBuffer();
   yybegin(STRING);
 }
 
-<STRING> {STRING_TEXT} {
-  return new Symbol(TokenConstants.STR_CONST,
-                    AbstractTable.stringtable.addString(yytext()));
+<STRING> {STRING_SIMPLE_CHAR}* {
+  string_buf.append(yytext());
 }
 
 <STRING> \" {
   yybegin(YYINITIAL);
+  return new Symbol(TokenConstants.STR_CONST,
+                    AbstractTable.stringtable.addString(string_buf.toString()));
 }
 
 
