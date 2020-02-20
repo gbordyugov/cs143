@@ -89,11 +89,14 @@ WHITE_SPACE_CHARS=([\ \t\b\f\r\v\x0b])+
 COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
 DASH_COMMENT_TEXT=([^\n])*
 STRING_SIMPLE_CHAR=[^\n\"\\]
-NORMAL_AFTER_BACKSLASH=[^btnf\x00]
+NORMAL_AFTER_BACKSLASH=[^btnf]
 NULL_CHAR=\x00
 %%
 
 <YYINITIAL> \" {
+  /*
+   * Closing quotes.
+   */
   string_buf = new StringBuffer();
   yybegin(STRING);
 }
@@ -127,12 +130,16 @@ NULL_CHAR=\x00
   string_buf.append(yytext().substring(1));
 }
 
-<STRING> \\{NULL_CHAR} {
-  return new Symbol(TokenConstants.ERROR, "Escaped null character in string");
-}
 
 <STRING> \" {
+  /*
+   * Closing quotes.
+   */
   yybegin(YYINITIAL);
+
+  if (string_buf.indexOf("\u0000") >= 0)
+    return new Symbol(TokenConstants.ERROR, "Null character in string");
+
   return new Symbol(TokenConstants.STR_CONST,
                     AbstractTable.stringtable.addString(string_buf.toString()));
 }
