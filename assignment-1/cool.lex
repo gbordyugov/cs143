@@ -312,7 +312,7 @@ NULL_CHAR=\x00
   return new Symbol(TokenConstants.LET);
 }
 
-<YYINITIAL> "{" {
+<YYINITIAL> "}" {
   return new Symbol(TokenConstants.RBRACE);
 }
 
