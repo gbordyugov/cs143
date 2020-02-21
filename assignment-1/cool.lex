@@ -332,12 +332,11 @@ NULL_CHAR=\x00
   return new Symbol(TokenConstants.BOOL_CONST, true);
 }
 
-<YYINITIAL> [aA][tT] {
+<YYINITIAL> "@" {
   return new Symbol(TokenConstants.AT);
 }
 
 <YYINITIAL> {TYPEID} {
-  // TODO
   return new Symbol(TokenConstants.TYPEID,
                     AbstractTable.idtable.addString(yytext()));
 }
