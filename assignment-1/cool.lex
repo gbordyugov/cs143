@@ -203,6 +203,10 @@ NULL_CHAR=\x00
   return new Symbol(TokenConstants.RPAREN);
 }
 
+<YYINITIAL> "~" {
+  return new Symbol(TokenConstants.NEG);
+}
+
 <YYINITIAL> [nN][oO][tT] {
   return new Symbol(TokenConstants.NOT);
 }
