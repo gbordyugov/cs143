@@ -373,5 +373,5 @@ NULL_CHAR=\x00
    /* This rule should be the very last in your lexical specification
       and will match match everything not matched by other lexical rules.
    */
-   return new Symbol(TokenConstants.ERROR, "unmatched " + yytext());
+   return new Symbol(TokenConstants.ERROR,  yytext());
 }
