@@ -140,6 +140,9 @@ NULL_CHAR=\x00
   if (string_buf.indexOf("\u0000") >= 0)
     return new Symbol(TokenConstants.ERROR, "Null character in string");
 
+  if (string_buf.length() > 1024)
+    return new Symbol(TokenConstants.ERROR, "String literal longer than 1024 characters");
+
   return new Symbol(TokenConstants.STR_CONST,
                     AbstractTable.stringtable.addString(string_buf.toString()));
 }
