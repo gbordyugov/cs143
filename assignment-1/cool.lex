@@ -160,9 +160,8 @@ NULL_CHAR=\x00
 
   comment_level--;
 
-  if (0 == comment_level) {
+  if (0 == comment_level)
     yybegin(YYINITIAL);
-  }
 }
 
 <COMMENT> {COMMENT_TEXT} {
