@@ -80,9 +80,6 @@ import java_cup.runtime.Symbol;
 %state COMMENT, DASH_COMMENT, STRING
 %cup
 
-DIGIT = [0-9]
-MULT = \*
-STR_CONST = \"[^\n]*\"
 TYPEID = [A-Z][a-zA-Z0-9_]*
 OBJECTID = [a-z][a-zA-Z0-9_]*
 WHITE_SPACE_CHARS=([\ \t\b\f\r\x0b])+
@@ -90,12 +87,11 @@ COMMENT_CHAR=.|\r
 DASH_COMMENT_TEXT=([^\n])*
 STRING_SIMPLE_CHAR=[^\n\"\\]
 NORMAL_AFTER_BACKSLASH=[^btnf]
-NULL_CHAR=\x00
 %%
 
 <YYINITIAL> \" {
   /*
-   * Closing quotes.
+   * Opening quotes.
    */
   string_buf = new StringBuffer();
   yybegin(STRING);
@@ -140,7 +136,7 @@ NULL_CHAR=\x00
   if (string_buf.indexOf("\u0000") >= 0)
     return new Symbol(TokenConstants.ERROR, "Null character in string");
 
-  if (string_buf.length() > 1024)
+  if (string_buf.length() >= MAX_STR_CONST)
     return new Symbol(TokenConstants.ERROR, "String literal longer than 1024 characters");
 
   return new Symbol(TokenConstants.STR_CONST,
@@ -168,12 +164,18 @@ NULL_CHAR=\x00
 }
 
 <COMMENT> {COMMENT_CHAR} {
+  /*
+   * The trick here is it consume one character after another, thus
+   * giving '*)' precendence such that it can recognised first, since
+   * it consumes two characters at a time instead of just one by this
+   * rule here.
+   */
 }
 
 <DASH_COMMENT> {DASH_COMMENT_TEXT} {
 }
 
-<YYINITIAL> {MULT} {
+<YYINITIAL> "*" {
   return new Symbol(TokenConstants.MULT);
 }
 
@@ -355,8 +357,6 @@ NULL_CHAR=\x00
 
 <YYINITIAL> {WHITE_SPACE_CHARS} {
 }
-
-
 
 <DASH_COMMENT> \n {
   curr_lineno++;
