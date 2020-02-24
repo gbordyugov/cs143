@@ -86,7 +86,7 @@ STR_CONST = \"[^\n]*\"
 TYPEID = [A-Z][a-zA-Z1-9_]*
 OBJECTID = [a-z][a-zA-Z1-9_]*
 WHITE_SPACE_CHARS=([\ \t\b\f\r\x0b])+
-COMMENT_TEXT=([^(*\n]|"*"[^)]|"("[^*])*
+COMMENT_CHAR=.|\r
 DASH_COMMENT_TEXT=([^\n])*
 STRING_SIMPLE_CHAR=[^\n\"\\]
 NORMAL_AFTER_BACKSLASH=[^btnf]
@@ -164,7 +164,7 @@ NULL_CHAR=\x00
     yybegin(YYINITIAL);
 }
 
-<COMMENT> {COMMENT_TEXT} {
+<COMMENT> {COMMENT_CHAR} {
 }
 
 <DASH_COMMENT> {DASH_COMMENT_TEXT} {
