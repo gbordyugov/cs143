@@ -83,8 +83,8 @@ import java_cup.runtime.Symbol;
 DIGIT = [0-9]
 MULT = \*
 STR_CONST = \"[^\n]*\"
-TYPEID = [A-Z][a-zA-Z1-9_]*
-OBJECTID = [a-z][a-zA-Z1-9_]*
+TYPEID = [A-Z][a-zA-Z0-9_]*
+OBJECTID = [a-z][a-zA-Z0-9_]*
 WHITE_SPACE_CHARS=([\ \t\b\f\r\x0b])+
 COMMENT_CHAR=.|\r
 DASH_COMMENT_TEXT=([^\n])*
