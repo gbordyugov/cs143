@@ -5,7 +5,7 @@ CUP := ${HOME}/cs143/bin/java_cup
 Parser.java: calc.cup Makefile
 	${CUP} -parser Parser -expect 10000 -dump -nopositions < calc.cup > calc.output 2>&1
 
-parser: Parser.java Makefile
+parser: Calc.class Parser.java Makefile
 	@rm -f parser
 	echo '#!/bin/sh' >> parser
 	echo 'java -classpath ${CUPJARS}:`dirname $$0` Main $$*' >> parser
@@ -14,3 +14,6 @@ parser: Parser.java Makefile
 
 Calc.class: Calc.java
 	javac -cp ${CUPJARS}:. *.java
+
+clean:
+	rm -rf *.class Parser.java sym.*
