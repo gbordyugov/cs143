@@ -1,4 +1,5 @@
-CUPJAR = ${HOME}/cs143/lib/java-cup-11a.jar
+JARLIB = ${HOME}/cs143/lib
+CUPJARS = ${JARLIB}java-cup-11a.jar:${JARLIB}/java-cup-11a-runtime.jar
 CUP := ${HOME}/cs143/bin/java_cup
 
 Parser.java: calc.cup Makefile
@@ -7,9 +8,9 @@ Parser.java: calc.cup Makefile
 parser: Parser.java Makefile
 	@rm -f parser
 	echo '#!/bin/sh' >> parser
-	echo 'java -classpath ${CLASSPATH}:`dirname $$0` Parser $$*' >> parser
+	echo 'java -classpath ${CUPJARS}:`dirname $$0` Main $$*' >> parser
 	chmod 755 parser
 
 
 Calc.class: Calc.java
-	javac -cp ${CUPJAR} Calc.java
+	javac -cp ${CUPJARS}:. *.java
