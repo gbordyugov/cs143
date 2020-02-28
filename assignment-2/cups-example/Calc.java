@@ -8,7 +8,7 @@ class Main {
     }
 }
 
-//public
+// public
 class scanner {
     /* single lookahead character */
     protected static int next_char;
