@@ -1,5 +1,4 @@
-# CUPJAR = ${HOME}/cs143/lib/java-cup-11a.jar
-CUPJAR = java-cup-11b.jar
+CUP := ${HOME}/cs143/bin/java_cup
 
 all:
-	java -jar ${CUPJAR} -interface -parser Parser calc.cup
+	${CUP} -parser Parser -expect 10000 -dump -nopositions < calc.cup > calc.output 2>&1
