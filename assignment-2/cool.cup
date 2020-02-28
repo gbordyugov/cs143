@@ -11,7 +11,7 @@ all parser actions.  All the extra variables/functions you want to use
 in the semantic actions should go here.  Don't remove or modify anything
 that was there initially.  */
 
-action code {: 
+action code {:
 
     int curr_lineno() {
 	return ((CoolTokenLexer)parser.getScanner()).curr_lineno();
@@ -20,7 +20,7 @@ action code {:
     AbstractSymbol curr_filename() {
 	return ((CoolTokenLexer)parser.getScanner()).curr_filename();
     }
-:} 
+:}
 
 /************************************************************************/
 /*                DONT CHANGE ANYTHING IN THIS SECTION                  */
@@ -31,7 +31,7 @@ parser code {:
     public void syntax_error(Symbol cur_token) {
         int lineno = action_obj.curr_lineno();
 	String filename = action_obj.curr_filename().getString();
-        System.err.print("\"" + filename + "\", line " + lineno + 
+        System.err.print("\"" + filename + "\", line " + lineno +
 		         ": parse error at or near ");
         Utilities.printToken(cur_token);
 	omerrs++;
@@ -71,7 +71,7 @@ nonterminal Features dummy_feature_list;
 
 /* Precedence declarations go here. */
 
-program	
+program
 	::= class_list:cl
 	    {: RESULT = new programc(curr_lineno(), cl); :}
         ;
@@ -88,8 +88,8 @@ class_list
 /* If no parent is specified, the class inherits from the Object class */
 class
 	::= CLASS TYPEID:n LBRACE dummy_feature_list:f RBRACE SEMI
-	    {: RESULT = new class_c(curr_lineno(), n, 
-		                   AbstractTable.idtable.addString("Object"), 
+	    {: RESULT = new class_c(curr_lineno(), n,
+		                   AbstractTable.idtable.addString("Object"),
 				   f, curr_filename()); :}
 	| CLASS TYPEID:n INHERITS TYPEID:p LBRACE dummy_feature_list:f RBRACE SEMI
 	    {: RESULT = new class_c(curr_lineno(), n, p, f, curr_filename()); :}
