@@ -5,15 +5,15 @@ CUP := ${HOME}/cs143/bin/java_cup
 Parser.java: calc.cup Makefile
 	${CUP} -parser Parser -expect 10000 -dump -nopositions < calc.cup > calc.output 2>&1
 
-parser: Calc.class Parser.java Makefile
+parser: Parser.java Calc.class Makefile
 	@rm -f parser
 	echo '#!/bin/sh' >> parser
 	echo 'java -classpath ${CUPJARS}:`dirname $$0` Main $$*' >> parser
 	chmod 755 parser
 
 
-Calc.class: Calc.java
+Calc.class: Calc.java Makefile
 	javac -cp ${CUPJARS}:. *.java
 
 clean:
-	rm -rf *.class Parser.java sym.*
+	rm -rf *.class Parser.java sym.* parser calc.output
