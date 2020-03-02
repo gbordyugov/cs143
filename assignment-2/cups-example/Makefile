@@ -1,5 +1,7 @@
 JARLIB = ${HOME}/cs143/lib
 CUPJARS = ${JARLIB}java-cup-11a.jar:${JARLIB}/java-cup-11a-runtime.jar
+## JARLIB = ./
+## CUPJARS = ${JARLIB}java-cup-11b.jar:${JARLIB}/java-cup-11b-runtime.jar
 CUP := ${HOME}/cs143/bin/java_cup
 
 Parser.java: calc.cup Makefile
@@ -17,3 +19,6 @@ Calc.class: Calc.java Makefile
 
 clean:
 	rm -rf *.class Parser.java sym.* parser calc.output
+
+debug:
+	jdb -classpath ${CUPJARS}:. Main
