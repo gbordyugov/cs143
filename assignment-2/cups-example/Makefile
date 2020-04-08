@@ -1,8 +1,10 @@
 JARLIB = ${HOME}/cs143/lib
+
 CUPJARS = ${JARLIB}java-cup-11a.jar:${JARLIB}/java-cup-11a-runtime.jar
-## JARLIB = ./
-## CUPJARS = ${JARLIB}java-cup-11b.jar:${JARLIB}/java-cup-11b-runtime.jar
-CUP := ${HOME}/cs143/bin/java_cup
+CUP := ${HOME}/cs143/bin/java_cup_11a
+
+CUPJARS = ${JARLIB}java-cup-11b.jar:${JARLIB}/java-cup-11b-runtime.jar
+CUP := ${HOME}/cs143/bin/java_cup_11b
 
 Parser.java: calc.cup Makefile
 	${CUP} -parser Parser -expect 10000 -dump -nopositions < calc.cup > calc.output 2>&1
