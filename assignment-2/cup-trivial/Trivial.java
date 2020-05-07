@@ -40,13 +40,6 @@ class scanner {
                     } while (next_char >= '0' && next_char <= '9');
                     return sf.newSymbol("NUMBER",sym.NUMBER, new Integer(i_val));
 
-                case ';': advance(); return sf.newSymbol("SEMI",sym.SEMI);
-                case '+': advance(); return sf.newSymbol("PLUS",sym.PLUS);
-                case '-': advance(); return sf.newSymbol("MINUS",sym.MINUS);
-                case '*': advance(); return sf.newSymbol("TIMES",sym.TIMES);
-                case '(': advance(); return sf.newSymbol("LPAREN",sym.LPAREN);
-                case ')': advance(); return sf.newSymbol("RPAREN",sym.RPAREN);
-
                 case -1: return sf.newSymbol("EOF",sym.EOF);
 
                 default:
