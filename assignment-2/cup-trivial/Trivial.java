@@ -40,7 +40,7 @@ class scanner {
                     } while (next_char >= '0' && next_char <= '9');
                     return sf.newSymbol("NUMBER",sym.NUMBER, new Integer(i_val));
 
-                case -1: return sf.newSymbol("EOF",sym.EOF);
+                case '\n': return sf.newSymbol("EOF",sym.EOF);
 
                 default:
                     /* in this simple scanner we just ignore everything else */

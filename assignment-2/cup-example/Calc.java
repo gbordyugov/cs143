@@ -47,7 +47,7 @@ class scanner {
                 case '(': advance(); return sf.newSymbol("LPAREN",sym.LPAREN);
                 case ')': advance(); return sf.newSymbol("RPAREN",sym.RPAREN);
 
-                case -1: return sf.newSymbol("EOF",sym.EOF);
+                case '\n': return sf.newSymbol("EOF",sym.EOF);
 
                 default:
                     /* in this simple scanner we just ignore everything else */

@@ -1,8 +1,5 @@
 JARLIB = ${HOME}/src/foreign/cup/target/dist
 
-# CUPJARS = ${JARLIB}/java-cup-11a.jar:${JARLIB}/java-cup-11a-runtime.jar
-# CUP := ${HOME}/cs143/bin/java_cup_11a
-
 CUPJARS = ${JARLIB}/java-cup-11b.jar:${JARLIB}/java-cup-11b-runtime.jar
 CUP := ${HOME}/cs143/bin/java_cup_11b
 
