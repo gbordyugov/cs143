@@ -26,6 +26,12 @@ JLex/Main.class: JLex/Main.java
 SExprLexer.lex.java: JLex/Main.class SExprLexer.lex
 	java -classpath . JLex.Main SExprLexer.lex
 
+SExprLexer.class: SExprLexer.lex.java
+	javac -d . SExprLexer.lex.java
+
+run_s_expr_lexer: SExprLexer.class
+	java SExprLexer
+
 ##
 ## End of lexing stuff
 ##
@@ -34,7 +40,8 @@ S-Expressions.class: S-Expressions.java Makefile
 	javac -cp ${CUPJARS}:. *.java
 
 clean:
-	rm -rf *.class Parser.java sym.* parser s-expressions.output
+	rm -rf *.class Parser.java sym.* parser s-expressions.output \
+	JLex/*.class SExprLexer.lex.java
 
 debug:
 	jdb -classpath ${CUPJARS}:. Main
