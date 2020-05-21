@@ -17,8 +17,18 @@ parser: Parser.java Trivial.class Makefile
 	echo 'java -classpath ${CUPJARS}:`dirname $$0` Main $$*' >> parser
 	chmod 755 parser
 
+##
+## Lexing stuff
+##
+JLex/Main.class: JLex/Main.java
+	javac JLex/Main.java
+
 SExprLexer.lex.java: JLex/Main.class SExprLexer.lex
 	java -classpath . JLex.Main SExprLexer.lex
+
+##
+## End of lexing stuff
+##
 
 S-Expressions.class: S-Expressions.java Makefile
 	javac -cp ${CUPJARS}:. *.java
