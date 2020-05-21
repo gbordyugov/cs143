@@ -1,0 +1,22 @@
+/* Just parse integers and return them */
+import java_cup.runtime.*;
+
+parser code {:
+    // Connect this parser to a scanner!
+    scanner s;
+    Parser(scanner s){ this.s=s; }
+:}
+
+/* define how to connect to the scanner! */
+init with {: s.init(); :};
+scan with {: return s.next_token(); :};
+
+terminal Integer    NUMBER;        // our scanner provides numbers as integers
+
+/* Non terminals */
+non terminal Integer    expr;      // used to store evaluated subexpressions
+
+/* The grammar rules */
+
+expr ::= NUMBER:n {: System.out.println(n); :}
+;
