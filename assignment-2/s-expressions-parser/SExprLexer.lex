@@ -1,13 +1,6 @@
 import java.lang.System;
-
-class SExprLexer {
-    public static void main(String argv[]) throws java.io.IOException {
-        Yylex yy = new Yylex(System.in);
-        SExprToken t;
-        while ((t = yy.yylex()) != null)
-            System.out.println(t);
-    }
-}
+import java_cup.runtime.Scanner;
+import java_cup.runtime.Symbol;
 
 class Utility {
     private static final String errorMsg[] = {
@@ -26,7 +19,6 @@ class Utility {
         System.out.println(errorMsg[code]);
     }
 }
-
 
 interface SExprToken {
     public String toString();
@@ -111,7 +103,10 @@ class SExprString implements SExprToken {
 %line
 %char
 %state COMMENT
-%type SExprToken
+
+%cup
+
+%type Symbol
 
 ALPHA=[A-Za-z]
 SYMBOL_CHAR=[A-Za-z+-*/_]

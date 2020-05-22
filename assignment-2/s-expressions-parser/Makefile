@@ -27,7 +27,7 @@ SExprLexer.lex.java: JLex/Main.class SExprLexer.lex
 	java -classpath . JLex.Main SExprLexer.lex
 
 SExprLexer.class: SExprLexer.lex.java
-	javac -d . SExprLexer.lex.java
+	javac -d . -cp ${CUPJARS}:. SExprLexer.lex.java
 
 run_s_expr_lexer: SExprLexer.class
 	java SExprLexer
