@@ -54,27 +54,27 @@ COMMENT_TEXT=[^\n]*
 
 <YYINITIAL> {NONNEWLINE_WHITE_SPACE_CHAR}+ { }
 
-<YYINITIAL> {SYMBOL_CHAR}* { return (new SExprSymbol(yytext())); }
+<YYINITIAL> {SYMBOL_CHAR}* { return symbol(sym.SYMBOL, (yytext())); }
 
 <YYINITIAL> [+-]?{DIGIT}*"."{DIGIT}+([eE][+-]?{DIGIT}+)? {
-  return symbol(sym.NUMBER, Double.parseDouble(yytext()));
+  return symbol(sym.DOUBLE, Double.parseDouble(yytext()));
 }
 
 <YYINITIAL> [+-]?{DIGIT}+ {
-  return (new SExprInt(Integer.parseInt(yytext())));
+  return symbol(sym.INTEGER, Integer.parseInt(yytext()));
 }
 
 <YYINITIAL> \"{STRING_TEXT}\" {
   String str = yytext().substring(1, yytext().length() - 1);
   assert str.length() == yytext().length() - 2;
-  return (new SExprSymbol(str));
+  return symbol(sym.SYMBOL, str);
 }
 
-<YYINITIAL> "(" { return (new SExprOpeningParen()); }
+<YYINITIAL> "(" { return symbol(sym.OPENING_PAREN); }
 
-<YYINITIAL> ")" { return (new SExprClosingParen()); }
+<YYINITIAL> ")" { return symbol(sym.CLOSING_PAREN); }
 
-<YYINITIAL> "'" { return (new SExprQuote()); }
+<YYINITIAL> "'" { return symbol(sym.QUOTE); }
 
 <YYINITIAL> \n { }
 

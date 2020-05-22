@@ -29,7 +29,7 @@ SExprLexer.lex.java: JLex/Main.class SExprLexer.lex
 SExprLexer.class: SExprLexer.lex.java
 	javac -d . -cp ${CUPJARS}:. SExprLexer.lex.java
 
-run_s_expr_lexer: SExprLexer.class
+run_s_expr_lexer: SExprLexer.class Parser.java
 	java SExprLexer
 
 ##

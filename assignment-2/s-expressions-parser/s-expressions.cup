@@ -11,12 +11,15 @@ parser code {:
 init with {: s.init(); :};
 scan with {: return s.next_token(); :};
 
-terminal Integer    NUMBER;        // our scanner provides numbers as integers
+terminal Double    INTEGER;        // our scanner provides numbers as doubles
+terminal Integer   DOUBLE;         // our scanner provides numbers as doubles
+terminal String    SYMBOL;
+terminal OPENING_PAREN, CLOSING_PAREN, QUOTE;
 
 /* Non terminals */
 non terminal Integer    expr;      // used to store evaluated subexpressions
 
 /* The grammar rules */
 
-expr ::= NUMBER:n {: System.out.println(n); :}
+expr ::= INTEGER:n {: System.out.println(n); :}
 ;
