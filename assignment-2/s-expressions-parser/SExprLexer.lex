@@ -20,86 +20,19 @@ class Utility {
     }
 }
 
-interface SExprToken {
-    public String toString();
-}
-
-
-class SExprQuote implements SExprToken {
-    public String toString() {
-        return "SExprQuote";
-    }
-}
-
-
-class SExprOpeningParen implements SExprToken {
-    public String toString() {
-        return "SExprOpeningParen";
-    }
-}
-
-
-class SExprClosingParen implements SExprToken {
-    public String toString() {
-        return "SExprClosingParen";
-    }
-}
-
-
-class SExprInt implements SExprToken {
-    private int value;
-
-    SExprInt(int v) {
-        value = v;
-    }
-
-    public String toString() {
-        return "SExprInt(" + value + ")";
-    }
-}
-
-
-class SExprDouble implements SExprToken {
-    private double value;
-
-    SExprDouble(double v) {
-        value = v;
-    }
-
-    public String toString() {
-        return "SExprDouble(" + value + ")";
-    }
-}
-
-class SExprSymbol implements SExprToken {
-    private String value;
-
-    SExprSymbol(String v) {
-        value = v;
-    }
-
-    public String toString() {
-        return "SExprSymbol(" + value + ")";
-    }
-}
-
-
-class SExprString implements SExprToken {
-    private String value;
-    SExprString(String v) {
-        value = v;
-    }
-
-    public String toString() {
-        return "SExprString(" + value + ")";
-    }
-}
-
 %%
 
 %{
+    // StringBuffer string = new StringBuffer();
 
+    private Symbol symbol(int type) {
+        return new Symbol(type);
+    }
+    private Symbol symbol(int type, Object value) {
+        return new Symbol(type, value);
+    }
 %}
+
 %line
 %char
 %state COMMENT
@@ -124,7 +57,7 @@ COMMENT_TEXT=[^\n]*
 <YYINITIAL> {SYMBOL_CHAR}* { return (new SExprSymbol(yytext())); }
 
 <YYINITIAL> [+-]?{DIGIT}*"."{DIGIT}+([eE][+-]?{DIGIT}+)? {
-  return (new SExprDouble(Double.parseDouble(yytext())));
+  return symbol(sym.NUMBER, Double.parseDouble(yytext()));
 }
 
 <YYINITIAL> [+-]?{DIGIT}+ {
