@@ -3,16 +3,18 @@ import java_cup.runtime.*;
 
 parser code {:
     // Connect this parser to a scanner!
+    /*
     scanner s;
     Parser(scanner s){ this.s=s; }
+    */
 :}
 
 /* define how to connect to the scanner! */
-init with {: s.init(); :};
-scan with {: return s.next_token(); :};
+// init with {: s.init(); :};
+// scan with {: return s.next_token(); :};
 
-terminal Double    INTEGER;        // our scanner provides numbers as doubles
-terminal Integer   DOUBLE;         // our scanner provides numbers as doubles
+terminal Integer   INTEGER;        // our scanner provides numbers as doubles
+terminal Double    DOUBLE;         // our scanner provides numbers as doubles
 terminal String    SYMBOL;
 terminal OPENING_PAREN, CLOSING_PAREN, QUOTE;
 
