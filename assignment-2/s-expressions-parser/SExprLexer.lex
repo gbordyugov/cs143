@@ -67,7 +67,7 @@ COMMENT_TEXT=[^\n]*
 <YYINITIAL> \"{STRING_TEXT}\" {
   String str = yytext().substring(1, yytext().length() - 1);
   assert str.length() == yytext().length() - 2;
-  return symbol(sym.SYMBOL, str);
+  return symbol(sym.STRING, str);
 }
 
 <YYINITIAL> "(" { return symbol(sym.OPENING_PAREN); }

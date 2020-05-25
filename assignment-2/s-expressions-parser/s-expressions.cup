@@ -15,13 +15,25 @@ parser code {:
 
 terminal Integer   INTEGER;        // our scanner provides numbers as doubles
 terminal Double    DOUBLE;         // our scanner provides numbers as doubles
+terminal String    STRING;
 terminal String    SYMBOL;
 terminal OPENING_PAREN, CLOSING_PAREN, QUOTE;
 
-/* Non terminals */
-non terminal Integer    expr;      // used to store evaluated subexpressions
+non terminal atom, s_expr, expr_list;      // used to store evaluated subexpressions
+
 
 /* The grammar rules */
 
-expr ::= INTEGER:n {: System.out.println(n); :}
+s_expr ::= OPENING_PAREN expr_list CLOSING_PAREN
+         | atom
+;
+
+expr_list ::= expr_list s_expr
+            | /* empty list */
+;
+
+atom ::= INTEGER:i {: System.out.println(i); :}
+       | DOUBLE:d  {: System.out.println(d); :}
+       | STRING:s  {: System.out.println(s); :}
+       | SYMBOL:s  {: System.out.println(s); :}
 ;
