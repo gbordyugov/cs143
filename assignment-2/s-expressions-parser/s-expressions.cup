@@ -20,8 +20,8 @@ terminal String    STRING;
 terminal String    SYMBOL;
 terminal OPENING_PAREN, CLOSING_PAREN, QUOTE;
 
-non terminal SExpr   atom;
-non terminal SExpr   s_expr;
+non terminal SExpr       atom;
+non terminal SExpr       s_expr;
 non terminal List<SExpr> expr_list;
 non terminal program;
 

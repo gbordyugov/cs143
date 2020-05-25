@@ -18,10 +18,7 @@ interface SExpr {
     }
 }
 
-interface SExprAtom extends SExpr {
-}
-
-class SExprSymbol implements SExprAtom {
+class SExprSymbol implements SExpr {
     private String value;
     SExprSymbol(String s) {
         value = s;
@@ -32,7 +29,7 @@ class SExprSymbol implements SExprAtom {
 
 }
 
-class SExprString implements SExprAtom {
+class SExprString implements SExpr {
     private String value;
     SExprString(String s) {
         value = s;
@@ -42,7 +39,7 @@ class SExprString implements SExprAtom {
     }
 }
 
-class SExprInt implements SExprAtom {
+class SExprInt implements SExpr {
     private Integer value;
     SExprInt(Integer i) {
         value = i;
@@ -52,7 +49,7 @@ class SExprInt implements SExprAtom {
     }
 }
 
-class SExprDouble implements SExprAtom {
+class SExprDouble implements SExpr {
     private Double value;
     SExprDouble(Double d) {
         value = d;
