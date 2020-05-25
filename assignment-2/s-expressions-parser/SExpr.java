@@ -3,6 +3,19 @@ import java.util.stream.Collectors;
 
 interface SExpr {
     public String toString();
+
+    public static SExpr SExprInt(Integer i) {
+        return new SExprInt(i);
+    }
+    public static SExpr SExprDouble(Double d) {
+        return new SExprDouble(d);
+    }
+    public static SExpr SExprString(String s) {
+        return new SExprString(s);
+    }
+    public static SExpr SExprSymbol(String s) {
+        return new SExprSymbol(s);
+    }
 }
 
 interface SExprAtom extends SExpr {

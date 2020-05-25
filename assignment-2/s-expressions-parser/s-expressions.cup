@@ -1,5 +1,6 @@
 /* Just parse integers and return them */
 import java_cup.runtime.*;
+import java.util.List;
 
 parser code {:
     // Connect this parser to a scanner!
@@ -13,27 +14,33 @@ parser code {:
 // init with {: s.init(); :};
 // scan with {: return s.next_token(); :};
 
-terminal Integer   INTEGER;        // our scanner provides numbers as doubles
-terminal Double    DOUBLE;         // our scanner provides numbers as doubles
+terminal Integer   INTEGER;
+terminal Double    DOUBLE;
 terminal String    STRING;
 terminal String    SYMBOL;
 terminal OPENING_PAREN, CLOSING_PAREN, QUOTE;
 
-non terminal atom, s_expr, expr_list;      // used to store evaluated subexpressions
+non terminal SExpr   atom;
+non terminal SExpr   s_expr;
+non terminal List<SExpr> expr_list;
+non terminal program;
 
 
 /* The grammar rules */
 
+program ::= s_expr:s {: System.out.println(s.toString()); :}
+;
+
 s_expr ::= OPENING_PAREN expr_list CLOSING_PAREN
-         | atom
+         | atom:a {: System.out.println(a.toString()); :}
 ;
 
 expr_list ::= expr_list s_expr
             | /* empty list */
 ;
 
-atom ::= INTEGER:i {: System.out.println(i); :}
-       | DOUBLE:d  {: System.out.println(d); :}
-       | STRING:s  {: System.out.println(s); :}
-       | SYMBOL:s  {: System.out.println(s); :}
+atom ::= INTEGER:i {: RESULT = SExpr.SExprInt(i);    :}
+       | DOUBLE:d  {: RESULT = SExpr.SExprDouble(d); :}
+       | STRING:s  {: RESULT = SExpr.SExprString(s); :}
+       | SYMBOL:s  {: RESULT = SExpr.SExprSymbol(s); :}
 ;

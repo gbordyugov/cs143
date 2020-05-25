@@ -11,7 +11,7 @@ Parser.java: s-expressions.cup Makefile
 		-expect 10000 \
 		-dump -nopositions < s-expressions.cup > s-expressions.output 2>&1
 
-parser: Parser.java Makefile SExprLexer.class S-Expressions.class
+parser: Parser.java Makefile SExprLexer.class S-Expressions.class SExpr.class
 	@rm -f parser
 	echo '#!/bin/sh' >> parser
 	echo 'java -classpath ${CUPJARS}:`dirname $$0` Main $$*' >> parser
@@ -38,6 +38,10 @@ SExprLexer.class: SExprLexer.lex.java
 
 S-Expressions.class: S-Expressions.java Makefile
 	javac -cp ${CUPJARS}:. *.java
+
+SExpr.class: SExpr.java Makefile
+	echo making SExpr.class
+	javac SExpr.java
 
 clean:
 	rm -rf *.class Parser.java sym.* parser s-expressions.output \
