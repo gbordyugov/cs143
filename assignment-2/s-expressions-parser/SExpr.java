@@ -38,7 +38,7 @@ class SExprString implements SExpr {
         value = s;
     }
     public String toString() {
-        return "SExprSymbol(" + value + ")";
+        return "SExprString(" + value + ")";
     }
 }
 

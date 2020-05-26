@@ -42,7 +42,7 @@ class Utility {
 %type Symbol
 
 ALPHA=[A-Za-z]
-SYMBOL_CHAR=[A-Za-z+-*/_]
+SYMBOL_CHAR=[0-9A-Za-z+\-*/_=:><]
 DIGIT=[0-9]
 NONNEWLINE_WHITE_SPACE_CHAR=[\ \t\b\012]
 WHITE_SPACE_CHAR=[\n\ \t\b\012]
@@ -54,7 +54,7 @@ COMMENT_TEXT=[^\n]*
 
 <YYINITIAL> {NONNEWLINE_WHITE_SPACE_CHAR}+ { }
 
-<YYINITIAL> {SYMBOL_CHAR}* { return symbol(sym.SYMBOL, (yytext())); }
+<YYINITIAL> {SYMBOL_CHAR}* { return symbol(sym.SYMBOL, yytext()); }
 
 <YYINITIAL> [+-]?{DIGIT}*"."{DIGIT}+([eE][+-]?{DIGIT}+)? {
   return symbol(sym.DOUBLE, Double.parseDouble(yytext()));
