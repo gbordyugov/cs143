@@ -16,6 +16,9 @@ interface SExpr {
     public static SExpr SExprSymbol(String s) {
         return new SExprSymbol(s);
     }
+    public static SExpr SExprList(List<SExpr> l) {
+        return new SExprList(l);
+    }
 }
 
 class SExprSymbol implements SExpr {
@@ -68,6 +71,6 @@ class SExprList implements SExpr {
         List<String> list = values.stream()
             .map(elt -> elt.toString())
             .collect(Collectors.toList());
-        return String.join(", ", list);
+        return "SExprList(" + String.join(", ", list) + ")";
     }
 }

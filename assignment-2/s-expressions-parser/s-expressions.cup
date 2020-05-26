@@ -1,6 +1,7 @@
 /* Just parse integers and return them */
 import java_cup.runtime.*;
 import java.util.List;
+import java.util.ArrayList;
 
 parser code {:
     // Connect this parser to a scanner!
@@ -31,12 +32,12 @@ non terminal program;
 program ::= s_expr:s {: System.out.println(s.toString()); :}
 ;
 
-s_expr ::= OPENING_PAREN expr_list CLOSING_PAREN
+s_expr ::= OPENING_PAREN expr_list:l CLOSING_PAREN {: RESULT = SExpr.SExprList(l); :}
          | atom:a {: RESULT = a; :}
 ;
 
-expr_list ::= expr_list s_expr
-            | /* empty list */
+expr_list ::= expr_list:l s_expr:e {: l.add(l.size(), e); RESULT = l; :}
+            |  /* empty list */    {: RESULT = new ArrayList<SExpr>(); :}
 ;
 
 atom ::= INTEGER:i {: RESULT = SExpr.SExprInt(i);    :}
