@@ -37,7 +37,7 @@ SExprLexer.class: SExprLexer.lex.java
 ##
 
 S-Expressions.class: S-Expressions.java Makefile
-	javac -cp ${CUPJARS}:. *.java
+	javac -cp ${CUPJARS}:. S-Expressions.java
 
 SExpr.class: SExpr.java Makefile
 	echo making SExpr.class

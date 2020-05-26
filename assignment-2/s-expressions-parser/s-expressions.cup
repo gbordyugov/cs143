@@ -32,7 +32,7 @@ program ::= s_expr:s {: System.out.println(s.toString()); :}
 ;
 
 s_expr ::= OPENING_PAREN expr_list CLOSING_PAREN
-         | atom:a {: System.out.println(a.toString()); :}
+         | atom:a {: RESULT = a; :}
 ;
 
 expr_list ::= expr_list s_expr
