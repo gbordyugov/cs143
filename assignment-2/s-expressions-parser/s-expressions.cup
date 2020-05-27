@@ -19,10 +19,12 @@ terminal Integer   INTEGER;
 terminal Double    DOUBLE;
 terminal String    STRING;
 terminal String    SYMBOL;
-terminal OPENING_PAREN, CLOSING_PAREN, QUOTE;
+terminal OPENING_PAREN, CLOSING_PAREN, QUOTE, ERROR;
 
 non terminal SExpr       atom;
 non terminal SExpr       s_expr;
+non terminal SExpr       quoted_s_expr;
+non terminal SExpr       unquoted_s_expr;
 non terminal List<SExpr> expr_list;
 non terminal program;
 
@@ -32,8 +34,15 @@ non terminal program;
 program ::= s_expr:s {: System.out.println(s.toString()); :}
 ;
 
-s_expr ::= OPENING_PAREN expr_list:l CLOSING_PAREN {: RESULT = SExpr.SExprList(l); :}
-         | atom:a {: RESULT = a; :}
+s_expr ::= unquoted_s_expr: e {: RESULT = e; :}
+         |  quoted_s_expr: e  {: RESULT = e; :}
+;
+
+quoted_s_expr ::= QUOTE s_expr:e {: RESULT = SExpr.SExprQuoted(e); :}
+;
+
+unquoted_s_expr ::= OPENING_PAREN expr_list:l CLOSING_PAREN {: RESULT = SExpr.SExprList(l); :}
+                  | atom:a {: RESULT = a; :}
 ;
 
 expr_list ::= expr_list:l s_expr:e {: l.add(l.size(), e); RESULT = l; :}

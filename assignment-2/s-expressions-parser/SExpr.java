@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 interface SExpr {
@@ -18,6 +19,10 @@ interface SExpr {
     }
     public static SExpr SExprList(List<SExpr> l) {
         return new SExprList(l);
+    }
+    public static SExpr SExprQuoted(SExpr e) {
+        SExpr quote = SExprSymbol("QUOTE");
+        return SExprList(Arrays.asList(quote, e));
     }
 }
 

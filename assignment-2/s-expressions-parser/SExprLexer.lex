@@ -23,7 +23,10 @@ class Utility {
 %%
 
 %{
-    // StringBuffer string = new StringBuffer();
+    // Max size of string constants
+    static int MAX_STR_CONST = 1024*1024;
+
+    StringBuffer string_buf = new StringBuffer();
 
     private Symbol symbol(int type) {
         return new Symbol(type);
@@ -35,7 +38,7 @@ class Utility {
 
 %line
 %char
-%state COMMENT
+%state COMMENT, STRING
 
 %cup
 
@@ -46,13 +49,67 @@ SYMBOL_CHAR=[0-9A-Za-z+\-*/_=:><]
 DIGIT=[0-9]
 NONNEWLINE_WHITE_SPACE_CHAR=[\ \t\b\012]
 WHITE_SPACE_CHAR=[\n\ \t\b\012]
-STRING_TEXT=(\\\"|[^\n\"]|\\{WHITE_SPACE_CHAR}+\\)*
 COMMENT_TEXT=[^\n]*
+STRING_SIMPLE_CHAR=[^\"\\]
+NORMAL_AFTER_BACKSLASH=[^btnf]
 
 
 %%
 
 <YYINITIAL> {NONNEWLINE_WHITE_SPACE_CHAR}+ { }
+
+
+
+<YYINITIAL> \" {
+  /*
+   * Opening quotes.
+   */
+  string_buf = new StringBuffer();
+  yybegin(STRING);
+}
+
+<STRING> {STRING_SIMPLE_CHAR}* {
+  string_buf.append(yytext());
+}
+
+<STRING> "\b" {
+  string_buf.append("\b");
+}
+
+<STRING> "\t" {
+  string_buf.append("\t");
+}
+
+<STRING> "\n" {
+  string_buf.append("\n");
+}
+
+<STRING> "\f" {
+  string_buf.append("\f");
+}
+
+
+<STRING> \\{NORMAL_AFTER_BACKSLASH} {
+  string_buf.append(yytext().substring(1));
+}
+
+
+<STRING> \" {
+  /*
+   * Closing quotes.
+   */
+  yybegin(YYINITIAL);
+
+  if (string_buf.indexOf("\u0000") >= 0)
+    return new Symbol(sym.ERROR, "Null character in string");
+
+  if (string_buf.length() >= MAX_STR_CONST)
+    return new Symbol(sym.ERROR, "String literal longer than 1024 characters");
+
+  return symbol(sym.STRING, string_buf.toString());
+}
+
+
 
 <YYINITIAL> {SYMBOL_CHAR}* { return symbol(sym.SYMBOL, yytext()); }
 
@@ -64,11 +121,6 @@ COMMENT_TEXT=[^\n]*
   return symbol(sym.INTEGER, Integer.parseInt(yytext()));
 }
 
-<YYINITIAL> \"{STRING_TEXT}\" {
-  String str = yytext().substring(1, yytext().length() - 1);
-  assert str.length() == yytext().length() - 2;
-  return symbol(sym.STRING, str);
-}
 
 <YYINITIAL> "(" { return symbol(sym.OPENING_PAREN); }
 
