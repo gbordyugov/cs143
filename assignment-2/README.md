@@ -13,3 +13,11 @@ Available documentation:
 - PA2.pdf from the course, explaining what to do,
 - tour of the Cool support code, including...
 - ... the definition of the Tree package
+
+Notes:
+
+- class `Program` has a `programc` constructor, class `class_` has a
+  `class_c` constructor,
+- other constructors don't have an `c` suffix as there is no
+  counterpart phylum,
+- constructors are nothing else but subclasses of the corresponding class,
