@@ -75,68 +75,74 @@ nonterminal Formal formal;
 
 /* Precedence declarations go here. */
 
-program
-    ::= class_list:cl
-	    {: RESULT = new programc(curr_lineno(), cl); :}
-    ;
+program ::=
+        class_list:cl
+        {: RESULT = new programc(curr_lineno(), cl); :}
+;
 
-class_list
-    /* single class */
-    ::= class:c
-        {: RESULT = (new Classes(curr_lineno())).appendElement(c); :}
-	  /* several classes */
-    | class_list:cl class:c
-	    {: RESULT = cl.appendElement(c); :}
-    ;
+class_list ::=
+           /* single class */
+           class:c
+           {: RESULT = (new Classes(curr_lineno())).appendElement(c); :}
+           |
+	       /* several classes */
+           class_list:cl class:c
+	       {: RESULT = cl.appendElement(c); :}
+;
 
 /* If no parent is specified, the class inherits from the Object class */
-class
-    ::= CLASS TYPEID:n LBRACE feature_list:f RBRACE SEMI
-        {: RESULT = new class_c(curr_lineno(), n,
-                                AbstractTable.idtable.addString("Object"),
-				                f, curr_filename()); :}
-    | CLASS TYPEID:n INHERITS TYPEID:p LBRACE feature_list:f RBRACE SEMI
+class ::=
+      CLASS TYPEID:n LBRACE feature_list:f RBRACE SEMI
+      {: RESULT = new class_c(curr_lineno(), n,
+                              AbstractTable.idtable.addString("Object"),
+				              f, curr_filename()); :}
+      |
+      CLASS TYPEID:n INHERITS TYPEID:p LBRACE feature_list:f RBRACE SEMI
       {: RESULT = new class_c(curr_lineno(), n, p, f, curr_filename()); :}
-    ;
+;
 
 /* Feature list may be empty, but no empty features in list. */
-feature_list
-    ::= /* empty */
-        {: RESULT = new Features(curr_lineno()); :}
-	  /* several features */
-    | feature_list:fl feature:f
-      {: RESULT = fl.appendElement(f); :}
-    ;
+feature_list ::=
+             /* empty */
+             {: RESULT = new Features(curr_lineno()); :}
+             |
+	         /* several features */
+             feature_list:fl feature:f
+             {: RESULT = fl.appendElement(f); :}
+;
 
-feature
-    /* an attribute, without initializing expressions, for time being */
-    ::= OBJECTID:n COLON TYPEID:t SEMI
+feature ::=
+        /* an attribute, without initializing expressions, for time being */
+        OBJECTID:n COLON TYPEID:t SEMI
         {: RESULT = new attr(curr_lineno(), n, t,
                              new no_expr(curr_lineno())); :}
-      /* a method with empty body body (for time being) */
-    | OBJECTID:n LPAREN formal_list:fs RPAREN COLON TYPEID:t LBRACE RBRACE SEMI
-      {: RESULT = new method(curr_lineno(), n, fs, t,
-                             new no_expr(curr_lineno())); :}
-    ;
+        |
+        /* a method with empty body body (for time being) */
+        OBJECTID:n LPAREN formal_list:fs RPAREN COLON TYPEID:t LBRACE RBRACE SEMI
+        {: RESULT = new method(curr_lineno(), n, fs, t,
+                               new no_expr(curr_lineno())); :}
+;
 
 /* Formal list */
-formal_list
-    ::= /* empty */
-        {: RESULT = new Formals(curr_lineno()); :}
-      /* several formals */
-    | non_empty_formal_list:fl
-	  {: RESULT = fl; :}
-    ;
+formal_list ::=
+            /* empty */
+            {: RESULT = new Formals(curr_lineno()); :}
+            |
+            /* several formals */
+            non_empty_formal_list:fl
+	        {: RESULT = fl; :}
+;
 
-non_empty_formal_list
-    ::= formal: f
-        {: RESULT = (new Formals(curr_lineno())).appendElement(f); :}
-	  /* several formals */
-    | non_empty_formal_list:fl COMMA formal:f
-      {: RESULT = fl.appendElement(f); :}
-    ;
+non_empty_formal_list ::=
+                      formal: f
+                      {: RESULT = (new Formals(curr_lineno())).appendElement(f); :}
+                      |
+	                  /* several formals */
+                      non_empty_formal_list:fl COMMA formal:f
+                      {: RESULT = fl.appendElement(f); :}
+;
 
-formal
-    ::= OBJECTID:n COLON TYPEID:t
-        {: RESULT = new formalc(curr_lineno(), n, t); :}
-    ;
+formal ::=
+       OBJECTID:n COLON TYPEID:t
+       {: RESULT = new formalc(curr_lineno(), n, t); :}
+;
