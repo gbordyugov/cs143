@@ -87,7 +87,7 @@ class_list ::=
            |
 	       /* several classes */
            class_list:cl class:c
-	       {: RESULT = cl.appendElement(c); :}
+           {: RESULT = cl.appendElement(c); :}
 ;
 
 /* If no parent is specified, the class inherits from the Object class */
@@ -130,7 +130,7 @@ formal_list ::=
             |
             /* several formals */
             non_empty_formal_list:fl
-	        {: RESULT = fl; :}
+            {: RESULT = fl; :}
 ;
 
 non_empty_formal_list ::=
