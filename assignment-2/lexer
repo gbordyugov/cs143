@@ -1,0 +1,3 @@
+#!/bin/sh
+JAR_PATH='/Users/gbordyugov/cs143/cool/lib'
+java -classpath ${JAR_PATH}/java-cup-11a.jar:${JAR_PATH}/jlex.jar:../assignment-1/:/usr/java/lib/rt.jar:`dirname $0` Lexer $*
