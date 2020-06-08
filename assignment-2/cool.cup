@@ -69,6 +69,9 @@ nonterminal Classes class_list;
 nonterminal class_c class;
 nonterminal Features feature_list;
 nonterminal Feature feature;
+nonterminal Formals formal_list;
+nonterminal Formals non_empty_formal_list;
+nonterminal Formal formal;
 
 /* Precedence declarations go here. */
 
@@ -100,14 +103,40 @@ class
 feature_list
 	::= /* empty */
 	    {: RESULT = new Features(curr_lineno()); :}
-	   /* several classes */
+	   /* several features */
       | feature_list:fl feature:f
 	    {: RESULT = fl.appendElement(f); :}
 	;
 
 feature
-    /* just attributes for time being, no initializing expressions */
-    ::= OBJECTID:f COLON TYPEID:t SEMI
-        {: RESULT = new attr(curr_lineno(), f, t,
+    /* an attribute, without initializing expressions, for time being */
+    ::= OBJECTID:n COLON TYPEID:t SEMI
+        {: RESULT = new attr(curr_lineno(), n, t,
                              new no_expr(curr_lineno())); :}
+    /* a method with empty body body (for time being) */
+      | OBJECTID:n LPAREN formal_list:fs RPAREN COLON TYPEID:t LBRACE RBRACE SEMI
+        {: RESULT = new method(curr_lineno(), n, fs, t,
+                             new no_expr(curr_lineno())); :}
+    ;
+
+/* Formal list */
+formal_list
+	::= /* empty */
+	    {: RESULT = new Formals(curr_lineno()); :}
+	  /* several formals */
+    | non_empty_formal_list:fl
+	  {: RESULT = fl; :}
+	;
+
+non_empty_formal_list
+	::= formal: f
+	    {: RESULT = (new Formals(curr_lineno())).appendElement(f); :}
+	  /* several formals */
+    | non_empty_formal_list:fl COMMA formal:f
+	  {: RESULT = fl.appendElement(f); :}
+	;
+
+formal
+    ::= OBJECTID:n COLON TYPEID:t
+        {: RESULT = new formalc(curr_lineno(), n, t); :}
     ;
