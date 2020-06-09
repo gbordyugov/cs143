@@ -292,10 +292,6 @@ NORMAL_AFTER_BACKSLASH=[^btnf]
   return new Symbol(TokenConstants.COLON);
 }
 
-<YYINITIAL> "-" {
-  return new Symbol(TokenConstants.NEG);
-}
-
 <YYINITIAL> "{" {
   return new Symbol(TokenConstants.LBRACE);
 }
