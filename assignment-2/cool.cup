@@ -74,6 +74,7 @@ nonterminal Formals non_empty_formal_list;
 nonterminal Formal formal;
 nonterminal Expression expression;
 nonterminal Expression atomic_expression;
+nonterminal Expression arith_expression;
 
 /* Precedence declarations go here. */
 
@@ -152,6 +153,9 @@ formal ::=
 expression ::=
            atomic_expression:e
            {: RESULT = e; :}
+           |
+           arith_expression:e
+           {: RESULT = e; :}
 ;
 
 
@@ -166,4 +170,33 @@ atomic_expression ::=
                   {: RESULT = new string_const(curr_lineno(), s); :}
                   BOOL_CONST:b
                   {: RESULT = new bool_const(curr_lineno(), b); :}
+;
+
+arith_expression ::=
+                 expression:e1 PLUS expression:e2
+                 {: RESULT = new plus(curr_lineno(), e1, e2); :}
+                 |
+                 expression:e1 MINUS expression:e2
+                 {: RESULT = new sub(curr_lineno(), e1, e2); :}
+                 |
+                 expression:e1 MULT expression:e2
+                 {: RESULT = new mul(curr_lineno(), e1, e2); :}
+                 |
+                 expression:e1 DIV expression:e2
+                 {: RESULT = new divide(curr_lineno(), e1, e2); :}
+                 |
+                 NEG expression:e
+                 {: RESULT = new neg(curr_lineno(), e); :}
+                 |
+                 expression:e1 LT expression:e2
+                 {: RESULT = new lt(curr_lineno(), e1, e2); :}
+                 |
+                 expression:e1 LE expression:e2
+                 {: RESULT = new leq(curr_lineno(), e1, e2); :}
+                 |
+                 expression:e1 EQ expression:e2
+                 {: RESULT = new eq(curr_lineno(), e1, e2); :}
+                 |
+                 NOT expression:e
+                 {: RESULT = new comp(curr_lineno(), e); :}
 ;
