@@ -75,6 +75,8 @@ nonterminal Formal formal;
 nonterminal Expression expression;
 nonterminal Expression atomic_expression;
 nonterminal Expression arith_expression;
+nonterminal Expression case_expression;
+nonterminal Cases cases;
 
 /* Precedence declarations go here. */
 
@@ -151,13 +153,38 @@ formal ::=
 ;
 
 expression ::=
-           atomic_expression:e
+           case_expression:e
            {: RESULT = e; :}
+           |
+           NEW TYPEID:t
+           {: RESULT = new new_(curr_lineno(), t); :}
+           |
+           ISVOID expression:e
+           {: RESULT = new isvoid(curr_lineno(), e); :}
            |
            arith_expression:e
            {: RESULT = e; :}
+           |
+           LPAREN expression:e RPAREN
+           {: RESULT = e; :}
+           |
+           atomic_expression:e
+           {: RESULT = e; :}
 ;
 
+case_expression ::=
+               CASE expression:e OF cases:bs ESAC
+               {: RESULT = new typecas(curr_lineno(), e, bs); :}
+;
+
+cases =
+           /* single class */
+           case:c
+           {: RESULT = ; :}
+           |
+           /* several classes */
+           class_list:cl class:c
+           {: RESULT = cl.appendElement(c); :}
 
 atomic_expression ::=
                   OBJECTID:n
