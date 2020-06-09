@@ -72,6 +72,8 @@ nonterminal Feature feature;
 nonterminal Formals formal_list;
 nonterminal Formals non_empty_formal_list;
 nonterminal Formal formal;
+nonterminal Expression expression;
+nonterminal Expression atomic_expression;
 
 /* Precedence declarations go here. */
 
@@ -145,4 +147,23 @@ non_empty_formal_list ::=
 formal ::=
        OBJECTID:n COLON TYPEID:t
        {: RESULT = new formalc(curr_lineno(), n, t); :}
+;
+
+expression ::=
+           atomic_expression:e
+           {: RESULT = e; :}
+;
+
+
+atomic_expression ::=
+                  OBJECTID:n
+                  {: RESULT = new object(curr_lineno(), n); :}
+                  |
+                  INT_CONST:i
+                  {: RESULT = new int_const(curr_lineno(), i); :}
+                  |
+                  STR_CONST:s
+                  {: RESULT = new string_const(curr_lineno(), s); :}
+                  BOOL_CONST:b
+                  {: RESULT = new bool_const(curr_lineno(), b); :}
 ;
