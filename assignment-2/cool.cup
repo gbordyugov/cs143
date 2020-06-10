@@ -76,6 +76,7 @@ nonterminal Expression expression;
 nonterminal Expression atomic_expression;
 nonterminal Expression arith_expression;
 nonterminal Expression case_expression;
+nonterminal Case case;
 nonterminal Cases cases;
 
 /* Precedence declarations go here. */
@@ -173,18 +174,24 @@ expression ::=
 ;
 
 case_expression ::=
-               CASE expression:e OF cases:bs ESAC
-               {: RESULT = new typecas(curr_lineno(), e, bs); :}
+               CASE expression:e OF cases:cs ESAC
+               {: RESULT = new typcase(curr_lineno(), e, cs); :}
 ;
 
-cases =
-           /* single class */
-           case:c
-           {: RESULT = ; :}
-           |
-           /* several classes */
-           class_list:cl class:c
-           {: RESULT = cl.appendElement(c); :}
+cases ::=
+      /* single case */
+      case:c
+      {: RESULT = (new Cases(curr_lineno())).appendElement(c); :}
+      |
+      /* several cases */
+      cases:cl case:c
+      {: RESULT = cl.appendElement(c); :}
+;
+
+case ::=
+     OBJECTID:n COLON TYPEID:t DARROW expression:e
+     {: RESULT = new branch(curr_lineno(), n, t, e); :}
+;
 
 atomic_expression ::=
                   OBJECTID:n
