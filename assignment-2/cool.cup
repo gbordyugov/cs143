@@ -196,11 +196,11 @@ let_expression ::=
 
 
 maybe_expr_in_let ::=
-                  /* empty expression */
-                  {: RESULT = new no_expr(curr_lineno()); :}
-                  |
                   DARROW expression:e
                   {: RESULT = e; :}
+                  |
+                  /* empty expression */
+                  {: RESULT = new no_expr(curr_lineno()); :}
 ;
 
 
