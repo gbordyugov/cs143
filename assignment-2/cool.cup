@@ -78,13 +78,16 @@ nonterminal Expression arith_expression;
 nonterminal Expression case_expression;
 nonterminal Case case;
 nonterminal Cases cases;
+nonterminal Expression let_expression;
 
 /* Precedence declarations go here. */
+
 
 program ::=
         class_list:cl
         {: RESULT = new programc(curr_lineno(), cl); :}
 ;
+
 
 class_list ::=
            /* single class */
@@ -95,6 +98,7 @@ class_list ::=
            class_list:cl class:c
            {: RESULT = cl.appendElement(c); :}
 ;
+
 
 /* If no parent is specified, the class inherits from the Object class */
 class ::=
@@ -107,6 +111,7 @@ class ::=
       {: RESULT = new class_c(curr_lineno(), n, p, f, curr_filename()); :}
 ;
 
+
 /* Feature list may be empty, but no empty features in list. */
 feature_list ::=
              /* empty */
@@ -116,6 +121,7 @@ feature_list ::=
              feature_list:fl feature:f
              {: RESULT = fl.appendElement(f); :}
 ;
+
 
 feature ::=
         /* an attribute, without initializing expressions, for time being */
@@ -129,6 +135,7 @@ feature ::=
                                new no_expr(curr_lineno())); :}
 ;
 
+
 /* Formal list */
 formal_list ::=
             /* empty */
@@ -139,6 +146,7 @@ formal_list ::=
             {: RESULT = fl; :}
 ;
 
+
 non_empty_formal_list ::=
                       formal: f
                       {: RESULT = (new Formals(curr_lineno())).appendElement(f); :}
@@ -148,12 +156,17 @@ non_empty_formal_list ::=
                       {: RESULT = fl.appendElement(f); :}
 ;
 
+
 formal ::=
        OBJECTID:n COLON TYPEID:t
        {: RESULT = new formalc(curr_lineno(), n, t); :}
 ;
 
+
 expression ::=
+           let_expression:e
+           {: RESULT = e; :}
+           |
            case_expression:e
            {: RESULT = e; :}
            |
@@ -173,10 +186,16 @@ expression ::=
            {: RESULT = e; :}
 ;
 
+
+let_expression ::=
+;
+
+
 case_expression ::=
                CASE expression:e OF cases:cs ESAC
                {: RESULT = new typcase(curr_lineno(), e, cs); :}
 ;
+
 
 cases ::=
       /* single case */
@@ -188,10 +207,12 @@ cases ::=
       {: RESULT = cl.appendElement(c); :}
 ;
 
+
 case ::=
      OBJECTID:n COLON TYPEID:t DARROW expression:e
      {: RESULT = new branch(curr_lineno(), n, t, e); :}
 ;
+
 
 atomic_expression ::=
                   OBJECTID:n
@@ -205,6 +226,7 @@ atomic_expression ::=
                   BOOL_CONST:b
                   {: RESULT = new bool_const(curr_lineno(), b); :}
 ;
+
 
 arith_expression ::=
                  expression:e1 PLUS expression:e2
