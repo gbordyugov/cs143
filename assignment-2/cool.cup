@@ -189,9 +189,8 @@ expression ::=
 
 
 let_expression ::=
-               LET OBJECTID:n COLON TYPEID:t maybe_expr:e
-               {: RESULT = new let(curr_lineno(), n, t,
-                                   new no_expr(curr_lineno()), e); :}
+               LET OBJECTID:n COLON TYPEID:t maybe_expr:e1 IN expression:e2
+               {: RESULT = new let(curr_lineno(), n, t, e1, e2); :}
 ;
 
 
