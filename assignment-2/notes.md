@@ -1,4 +1,4 @@
-# My notes around the second home assignment in CS 143 Compilers, Stanford.
+# My nfotes around the second home assignment in CS 143 Compilers, Stanford
 
 ## The problem with let
 
