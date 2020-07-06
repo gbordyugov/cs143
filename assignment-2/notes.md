@@ -29,7 +29,7 @@ The expression
 let a: String <- "foo", b: String <- "buzz" in 3.1415926
 ```
 
-should call the following constructor
+should result in the parser calling the following chained constructor:
 
 ```
 let(a, String; "foo", let(b, String, "buzz", 3.1415926))
