@@ -20,3 +20,17 @@ the case of several identifiers, the whole let expression should be
 parser as a nested set of several let expressions, each one with only
 one identifier. I am therefore confused about how to express this
 logic in the parser specification `cool.cup`.
+
+## Example
+
+The expression
+
+```
+let a: String <- "foo", b: String <- "buzz" in 3.1415926
+```
+
+should call the following constructor
+
+```
+let(a, String; "foo", let(b, String, "buzz", 3.1415926))
+```
