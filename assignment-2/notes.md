@@ -32,7 +32,8 @@ let a: String <- "foo", b: String <- "buzz" in 3.1415926
 should result in the parser calling the following chained constructor:
 
 ```
-let(a, String; "foo", let(b, String, "buzz", 3.1415926))
+let(a, String; "foo",
+    let(b, String, "buzz", 3.1415926))
 ```
 
 But I still don't understanding how to do that!
