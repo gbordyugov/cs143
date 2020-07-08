@@ -26,7 +26,11 @@ logic in the parser specification `cool.cup`.
 The expression
 
 ```
-let a: String <- "foo", b: String <- "buzz" in 3.1415926
+let
+    a: String <- "foo",
+    b: String <- "buzz"
+in
+    3.1415926
 ```
 
 should result in the parser calling the following chained constructor:
