@@ -1,7 +1,8 @@
 class A {
       i: Integer;
       s: String;
-      f(i: Integer, s: String): String {
+      f1(i: Integer, s: String): String {
+           let a: Integer in 3
       };
 };
 
