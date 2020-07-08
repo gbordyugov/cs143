@@ -22,7 +22,7 @@ Notes:
   counterpart phylum,
 - constructors are nothing else but subclasses of the corresponding class,
 
-## The problem with let
+## The problem with `LET`
 
 The syntax of `let` reads
 
