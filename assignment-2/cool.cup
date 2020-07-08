@@ -78,7 +78,7 @@ nonterminal Expression arith_expression;
 nonterminal Expression case_expression;
 nonterminal Case case;
 nonterminal Cases cases;
-nonterminal Expression let_expression;
+nonterminal Expression let_sequence;
 nonterminal Expression maybe_expr_in_let;
 
 /* Precedence declarations go here. */
@@ -165,7 +165,7 @@ formal ::=
 
 
 expression ::=
-           let_expression:e
+           LET let_sequence:e
            {: RESULT = e; :}
            |
            case_expression:e
@@ -188,18 +188,17 @@ expression ::=
 ;
 
 
-let_expression ::=
-               LET OBJECTID:n COLON TYPEID:t ASSIGN maybe_expr_in_let:e1 IN expression:e2
+let_sequence ::=
+               OBJECTID:n COLON TYPEID:t maybe_expr_in_let:e1 IN expression:e2
                {: RESULT = new let(curr_lineno(), n, t, e1, e2); :}
-               /*
                |
-               LET OBJECTID:n COLON TYPEID:t ASSIGN maybe_expr_in_let:e1 IN expression:e2
-               */
+               OBJECTID:n COLON TYPEID:t maybe_expr_in_let:e1 COMMA let_sequence:e2
+               {: RESULT = new let(curr_lineno(), n, t, e1, e2); :}
 ;
 
 
 maybe_expr_in_let ::=
-                  DARROW expression:e
+                  ASSIGN expression:e
                   {: RESULT = e; :}
                   |
                   /* empty expression */
