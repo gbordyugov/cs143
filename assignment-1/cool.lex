@@ -320,10 +320,6 @@ NORMAL_AFTER_BACKSLASH=[^btnf]
   return new Symbol(TokenConstants.RBRACE);
 }
 
-<YYINITIAL> [lL][eE][tT] {
-  return new Symbol(TokenConstants.LET_STMT);
-}
-
 <YYINITIAL> [tT][hH][eE][nN] {
   return new Symbol(TokenConstants.THEN);
 }
