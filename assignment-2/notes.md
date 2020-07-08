@@ -41,3 +41,30 @@ let(a, String; "foo",
 ```
 
 But I still don't understanding how to do that!
+
+## Solution
+
+Taken from [here](https://github.com/egaburov/CS143-Compilers-Stanford/blob/master/PA3/cool.y).
+
+The idea is to move the `LET` keyword out of the definition of
+let-expressions. Then we have to do either with simple, i.e,
+single-id, let-expressions like
+
+```
+    b: String <- "buzz"
+in
+    3
+```
+
+or multi-id let-expressions like
+
+```
+    b: String <- "buzz"
+    c: String <- "qux"
+in
+    3
+```
+
+The latter is just a one-id let-expression prefixed by `b: String <-
+"buzz"` that could be trivially parsed with the help of a two-choice
+production rule.
