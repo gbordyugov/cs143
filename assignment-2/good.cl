@@ -5,7 +5,9 @@ class A {
             {
                 if 3 then 5 else 0 fi;
                 let a: Integer in 3;
-                5;
+                while 5 loop
+                      3
+                pool;
            }
       };
       f3(i: Integer, s: String): String {

@@ -169,6 +169,9 @@ expression ::=
            IF expression:e1 THEN expression:e2 ELSE expression:e3 FI
            {: RESULT = new cond(curr_lineno(), e1, e2, e3); :}
            |
+           WHILE expression:e1 LOOP expression:e2 POOL
+           {: RESULT = new loop(curr_lineno(), e1, e2); :}
+           |
            block:e
            {: RESULT = e; :}
            |
