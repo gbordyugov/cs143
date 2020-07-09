@@ -3,7 +3,7 @@ class A {
       s: String;
       f1(i: Integer, s: String): String {
             {
-                4;
+                if 3 then 5 else 0 fi;
                 let a: Integer in 3;
                 5;
            }

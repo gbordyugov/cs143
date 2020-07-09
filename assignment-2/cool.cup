@@ -166,6 +166,9 @@ formal ::=
 
 
 expression ::=
+           IF expression:e1 THEN expression:e2 ELSE expression:e3 FI
+           {: RESULT = new cond(curr_lineno(), e1, e2, e3); :}
+           |
            block:e
            {: RESULT = e; :}
            |
