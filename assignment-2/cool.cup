@@ -80,6 +80,8 @@ nonterminal Case case;
 nonterminal Cases cases;
 nonterminal Expression let_sequence;
 nonterminal Expression maybe_expr_in_let;
+nonterminal Expression block;
+nonterminal Expressions non_empty_expr_list;
 
 /* Precedence declarations go here. */
 
@@ -164,6 +166,9 @@ formal ::=
 
 
 expression ::=
+           block:e
+           {: RESULT = e; :}
+           |
            LET let_sequence:e
            {: RESULT = e; :}
            |
@@ -186,6 +191,18 @@ expression ::=
            {: RESULT = e; :}
 ;
 
+block ::=
+      LBRACE non_empty_expr_list:el RBRACE
+      {: RESULT = new block(curr_lineno(), el); :}
+;
+
+non_empty_expr_list ::=
+                    expression:e SEMI
+                    {: RESULT = (new Expressions(curr_lineno())).appendElement(e); :}
+                    |
+                    expression:e SEMI non_empty_expr_list:el
+                    {: RESULT = el.appendElement(e); :}
+;
 
 let_sequence ::=
                OBJECTID:n COLON TYPEID:t maybe_expr_in_let:e1 IN expression:e2

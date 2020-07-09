@@ -2,7 +2,11 @@ class A {
       i: Integer;
       s: String;
       f1(i: Integer, s: String): String {
-           let a: Integer in 3
+            {
+                4;
+                let a: Integer in 3;
+                5;
+           }
       };
       f3(i: Integer, s: String): String {
            let a: Integer, b: Integer in 3
