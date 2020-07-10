@@ -1,6 +1,7 @@
 class A {
       i: Integer;
       s: String;
+      method(): String { "tri" };
       f1(i: Integer, s: String): String {
             {
                 if 3 then 5 else 0 fi;
@@ -8,6 +9,7 @@ class A {
                 while 5 loop
                       3
                 pool;
+                method();
            }
       };
       f3(i: Integer, s: String): String {

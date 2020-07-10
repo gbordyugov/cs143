@@ -216,6 +216,12 @@ dispatch ::=
 static_dispatch ::=
                  expression:e DOT OBJECTID:method LPAREN method_args:args RPAREN
                  {: RESULT = new dispatch(curr_lineno(), e, method, args); :}
+                 |
+                 /* default to "self" */
+                 OBJECTID:method LPAREN method_args:args RPAREN
+                 {: AbstractSymbol selfSymbol = AbstractTable.inttable.addString("self");
+                    Expression self =  new object(curr_lineno(), selfSymbol);
+                    RESULT = new dispatch(curr_lineno(), self, method, args); :}
 ;
 
 dynamic_dispatch ::=
