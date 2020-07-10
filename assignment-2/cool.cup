@@ -82,6 +82,10 @@ nonterminal Expression let_sequence;
 nonterminal Expression maybe_expr_in_let;
 nonterminal Expression block;
 nonterminal Expressions non_empty_expr_list;
+nonterminal Expression dispatch;
+nonterminal Expression static_dispatch;
+nonterminal Expression dynamic_dispatch;
+nonterminal Expressions method_args;
 
 /* Precedence declarations go here. */
 
@@ -166,6 +170,9 @@ formal ::=
 
 
 expression ::=
+           dispatch:e
+           {: RESULT = e; :}
+           |
            IF expression:e1 THEN expression:e2 ELSE expression:e3 FI
            {: RESULT = new cond(curr_lineno(), e1, e2, e3); :}
            |
@@ -195,6 +202,28 @@ expression ::=
            |
            atomic_expression:e
            {: RESULT = e; :}
+;
+
+dispatch ::=
+         static_dispatch:e
+         {: RESULT = e; :}
+         |
+         dynamic_dispatch:e
+         {: RESULT = e; :}
+;
+
+static_dispatch ::=
+;
+
+dynamic_dispatch ::=
+;
+
+method_args ::=
+            /* empty list */
+            {: RESULT = new Expressions(curr_lineno()); :}
+            |
+            expression:e
+            {: RESULT = (new Expressions(curr_lineno())).appendElement(e); :}
 ;
 
 block ::=
