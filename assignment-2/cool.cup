@@ -308,6 +308,7 @@ atomic_expression ::=
                   |
                   STR_CONST:s
                   {: RESULT = new string_const(curr_lineno(), s); :}
+                  |
                   BOOL_CONST:b
                   {: RESULT = new bool_const(curr_lineno(), b); :}
 ;
