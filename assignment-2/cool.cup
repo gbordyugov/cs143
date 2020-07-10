@@ -86,6 +86,7 @@ nonterminal Expression dispatch;
 nonterminal Expression static_dispatch;
 nonterminal Expression dynamic_dispatch;
 nonterminal Expressions method_args;
+nonterminal Expressions non_empty_method_args;
 
 /* Precedence declarations go here. */
 
@@ -213,17 +214,29 @@ dispatch ::=
 ;
 
 static_dispatch ::=
+                 expression:e DOT OBJECTID:method LPAREN method_args:args RPAREN
+                 {: RESULT = new dispatch(curr_lineno(), e, method, args); :}
 ;
 
 dynamic_dispatch ::=
+                 expression:e AT TYPEID:type DOT OBJECTID:method LPAREN method_args:args RPAREN
+                 {: RESULT = new static_dispatch(curr_lineno(), e, type, method, args); :}
 ;
 
 method_args ::=
             /* empty list */
             {: RESULT = new Expressions(curr_lineno()); :}
             |
-            expression:e
-            {: RESULT = (new Expressions(curr_lineno())).appendElement(e); :}
+            non_empty_method_args:es
+            {: RESULT = es; :}
+;
+
+non_empty_method_args ::=
+                      expression:e
+                      {: RESULT = (new Expressions(curr_lineno())).appendElement(e); :}
+                      |
+                      expression:e COMMA non_empty_method_args:es
+                      {: RESULT = es.appendElement(e); :}
 ;
 
 block ::=
