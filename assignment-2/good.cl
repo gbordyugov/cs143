@@ -9,7 +9,8 @@ class A {
                 while 5 loop
                       3
                 pool;
-                method();
+                nonExistingMethod();
+                self.f3(5, "bla");
            }
       };
       f3(i: Integer, s: String): String {
