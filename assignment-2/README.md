@@ -103,5 +103,6 @@ during execution.
 
 A type checker is called _sound_ if each expression's dynamic type is
 not broader (i.e. not a super-class of) than the static type. For
-example, it's OK to resolve a statically typed `Animal` to an `Dog` at
-runtime, but not the other way around.
+example, given that `Dog` is a sub-class of `Animal`, it's OK to
+resolve a statically typed (=declared in the source code) `Animal` to
+an `Dog` at runtime, but not the other way around.
