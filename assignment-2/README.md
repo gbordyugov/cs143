@@ -92,3 +92,16 @@ in
 The latter is just a one-id let-expression prefixed by `b: String <-
 "buzz"` that could be trivially parsed with the help of a two-choice
 production rule.
+
+
+## Static vs dynamic types
+
+The _static_ type of an expression is the type that is assigned to the
+expression by the compiler at compile time. Contrarily, the _dynamic_
+type is the type to which the expression evaluates at runtime, i.e.
+during execution.
+
+A type checker is called _sound_ if each expression's dynamic type is
+not broader (i.e. not a super-class of) than the static type. For
+example, it's OK to resolve a statically typed `Animal` to an `Dog` at
+runtime, but not the other way around.
