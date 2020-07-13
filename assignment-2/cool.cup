@@ -90,6 +90,8 @@ nonterminal Expressions non_empty_method_args;
 nonterminal Expression assignment;
 
 /* Precedence declarations go here. */
+precedence left PLUS, MINUS;
+precedence left MULT, DIV;
 
 
 program ::=
