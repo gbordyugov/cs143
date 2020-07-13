@@ -87,6 +87,7 @@ nonterminal Expression static_dispatch;
 nonterminal Expression dynamic_dispatch;
 nonterminal Expressions method_args;
 nonterminal Expressions non_empty_method_args;
+nonterminal Expression assignment;
 
 /* Precedence declarations go here. */
 
@@ -171,6 +172,9 @@ formal ::=
 
 
 expression ::=
+           assignment:e
+           {: RESULT = e; :}
+           |
            dispatch:e
            {: RESULT = e; :}
            |
@@ -203,6 +207,11 @@ expression ::=
            |
            atomic_expression:e
            {: RESULT = e; :}
+;
+
+assignment ::=
+           OBJECTID:n ASSIGN expression:e
+           {: RESULT = new assign(curr_lineno(), n, e); :}
 ;
 
 dispatch ::=
