@@ -106,3 +106,23 @@ not broader (i.e. not a super-class of) than the static type. For
 example, given that `Dog` is a sub-class of `Animal`, it's OK to
 resolve a statically typed (=declared in the source code) `Animal` to
 an `Dog` at runtime, but not the other way around.
+
+## Running the grading script
+
+Get `pa2-grading.pl` from _somewhere_. Run it for a first time, it
+will generate a directory called `grading` with lots of files in it.
+
+The following steps might be needed to get grading to run properly:
+
+- on Mac OSX, change the path to `sed` in `grading/PA3-filter`,
+- you might want to change `grading/myparser` in such a way that it
+  calls your lexer and parser in an appropriate way.
+
+After you have set up all this, run
+
+```
+pa2-grading.pl -r
+```
+
+where the `-r` flag ensures that the grading script doesn't overwrite
+your changes in the `grading` repository.
