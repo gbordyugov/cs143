@@ -269,10 +269,10 @@ non_empty_expr_list ::=
                     expression:e SEMI
                     {: RESULT = (new Expressions(curr_lineno())).appendElement(e); :}
                     |
-                    expression:e SEMI non_empty_expr_list:el
+                    non_empty_expr_list:el expression:e SEMI
                     {: RESULT = el.appendElement(e); :}
                     |
-                    error SEMI non_empty_expr_list:el
+                    non_empty_expr_list:el error SEMI
                     {: RESULT = el; :}
 ;
 
