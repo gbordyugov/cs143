@@ -256,7 +256,7 @@ non_empty_method_args ::=
                       expression:e
                       {: RESULT = (new Expressions(curr_lineno())).appendElement(e); :}
                       |
-                      expression:e COMMA non_empty_method_args:es
+                      non_empty_method_args:es COMMA expression:e
                       {: RESULT = es.appendElement(e); :}
 ;
 
