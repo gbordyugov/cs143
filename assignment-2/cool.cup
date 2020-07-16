@@ -272,8 +272,8 @@ non_empty_expr_list ::=
                     non_empty_expr_list:el expression:e SEMI
                     {: RESULT = el.appendElement(e); :}
                     |
-                    non_empty_expr_list:el error SEMI
-                    {: RESULT = el; :}
+                    error SEMI
+                    {: RESULT = new Expressions(curr_lineno()); :}
 ;
 
 let_sequence ::=
