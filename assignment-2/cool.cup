@@ -267,6 +267,9 @@ non_empty_expr_list ::=
                     |
                     expression:e SEMI non_empty_expr_list:el
                     {: RESULT = el.appendElement(e); :}
+                    |
+                    error SEMI non_empty_expr_list:el
+                    {: RESULT = el; :}
 ;
 
 let_sequence ::=
