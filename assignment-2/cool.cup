@@ -140,7 +140,7 @@ feature ::=
         {: RESULT = new attr(curr_lineno(), n, t,
                              new no_expr(curr_lineno())); :}
         |
-        /* a method with empty body body (for time being) */
+        /* a method with a body */
         OBJECTID:n LPAREN formal_list:fs RPAREN COLON TYPEID:t LBRACE expression:e RBRACE SEMI
         {: RESULT = new method(curr_lineno(), n, fs, t, e); :}
 ;
