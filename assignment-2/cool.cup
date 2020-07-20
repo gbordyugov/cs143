@@ -110,7 +110,7 @@ class_list ::=
            {: RESULT = cl.appendElement(c); :}
            |
            /* several classes with an error */
-           error SEMI class_list:cl SEMI
+           CLASS error SEMI class_list:cl SEMI
            {: RESULT = cl; :}
 ;
 
@@ -135,6 +135,10 @@ feature_list ::=
              /* several features */
              feature_list:fl feature:f SEMI
              {: RESULT = fl.appendElement(f); :}
+             |
+             /* several features with an error*/
+             feature_list:fl error SEMI
+             {: RESULT = fl; :}
 ;
 
 
