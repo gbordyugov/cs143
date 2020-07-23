@@ -292,6 +292,9 @@ let_sequence ::=
                |
                OBJECTID:n COLON TYPEID:t maybe_expr_in_let:e1 COMMA let_sequence:e2
                {: RESULT = new let(curr_lineno(), n, t, e1, e2); :}
+               |
+               error COMMA let_sequence:e2
+               {: RESULT = e2; :}
 ;
 
 
