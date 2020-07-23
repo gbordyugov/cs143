@@ -93,7 +93,7 @@ nonterminal Expression assignment;
 precedence left PLUS, MINUS;
 precedence left MULT, DIV;
 precedence left ISVOID, NEG;
-precedence nonassoc LE;
+precedence nonassoc LE, EQ;
 
 
 program ::=
