@@ -310,11 +310,11 @@ case_expression ::=
 
 cases ::=
       /* single case */
-      case:c
+      case:c SEMI
       {: RESULT = (new Cases(curr_lineno())).appendElement(c); :}
       |
       /* several cases */
-      cases:cl case:c
+      cases:cl case:c SEMI
       {: RESULT = cl.appendElement(c); :}
 ;
 
