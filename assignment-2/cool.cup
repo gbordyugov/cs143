@@ -108,11 +108,11 @@ class_list ::=
            {: RESULT = (new Classes(curr_lineno())).appendElement(c); :}
            |
            /* several classes */
-           CLASS class_decl:c SEMI class_list:cl SEMI
+           class_list:cl CLASS class_decl:c SEMI
            {: RESULT = cl.appendElement(c); :}
            |
            /* several classes with an error */
-           CLASS error SEMI class_list:cl SEMI
+           class_list:cl CLASS error SEMI
            {: RESULT = cl; :}
 ;
 
