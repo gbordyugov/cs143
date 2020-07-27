@@ -115,7 +115,7 @@ class_list ::=
            /* several classes with error */
            class_list:cl CLASS error SEMI
            {: RESULT = cl; :}
-	   |
+	       |
            /* error */
            CLASS error SEMI
            {: RESULT = new Classes(curr_lineno()); :}
