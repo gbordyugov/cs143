@@ -126,3 +126,19 @@ pa2-grading.pl -r
 
 where the `-r` flag ensures that the grading script doesn't overwrite
 your changes in the `grading` repository.
+
+
+## Error recovery after invalid class definition
+
+The problem I'm struggling here is how to recover from an error in an
+invalid class definition. My current solution (that seems though to
+satisfy the unit test case and the grading script) relies on consuming
+all tokens up to, and including, a semicolon once there has been an
+error in a class def. At the same time, I don't think this approach is
+particularly robust, as the semicolon that we're using as a recovery
+checkpoint might appear within that invalid class definition.
+
+A much better approach would be to use the 'class' keyword as a
+recovery check point. For that, it would be necessary to be able to
+start parsing a class definition without a "class" keyword before it.
+I'm working on it right now.
