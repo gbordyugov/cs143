@@ -94,6 +94,7 @@ precedence left PLUS, MINUS;
 precedence left MULT, DIV;
 precedence left ISVOID, NEG;
 precedence nonassoc LE, EQ;
+precedence left DOT;
 
 
 program ::=
@@ -110,6 +111,10 @@ class_list ::=
            /* several classes */
            class_list:cl CLASS class_decl:c SEMI
            {: RESULT = cl.appendElement(c); :}
+           |
+           /* several classes with error */
+           class_list:cl CLASS error SEMI
+           {: RESULT = cl; :}
 	   |
            /* error */
            CLASS error SEMI
